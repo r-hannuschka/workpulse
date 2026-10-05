@@ -1,0 +1,3 @@
+export enum WEBVIEW_ERROR_CODE {
+  MISSING_PAYLOAD = 200,
+}

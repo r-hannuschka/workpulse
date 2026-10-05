@@ -1,0 +1,23 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "runtimeExecutable": "${execPath}",
+      "args": [
+        "--extensionDevelopmentPath=${workspaceFolder}/extension"
+      ],
+      "outFiles": [
+        "${workspaceFolder}/extension/dist/**/*.js"
+      ],
+      "env": {
+        "JIRA_API_URL": "https://YOUR_JIRA_URL",
+        "JIRA_API_TOKEN": "YOUR_API_TOKEN_HERE",
+        "JIRA_USER_NAME": "YOUR_USERNAME",
+        "JIRA_PROJECT_KEY": "YOUR_PROJECT_KEY"
+      }
+    }
+  ]
+}

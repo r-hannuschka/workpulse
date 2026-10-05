@@ -1,0 +1,12 @@
+{
+  "name": "timetracker_vscode",
+  "version": "0.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "Ralf Hannuschka",
+  "scripts": {
+    "webview:build": "npm run build --prefix webview",
+    "extension:watch": "node ./extension/esbuild --watch",
+    "extension:build": "node ./extension/esbuild"
+  }
+}

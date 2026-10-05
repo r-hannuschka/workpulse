@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+out/
+*.tgz
+
+# Webview
+.svelte-kit/
+
+# VS Code
+.vscode/settings.local
+.vscode/launch.json
+.vscode/tasks.local.json
+.vscode-test/
+*.code-workspace
+.idea/
+
+# Environment / secrets
+.env
+.env.*
+
+# Claude Code (all local, never share)
+.claude/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+
+# Misc
+*.local
+response.json

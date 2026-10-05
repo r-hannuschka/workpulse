@@ -1,0 +1,119 @@
+{
+  "name": "timetracker_vscode",
+  "publisher": "trueffelmafia",
+  "displayName": "Timetracker VSCode",
+  "engines": {
+    "vscode": "^1.105.0"
+  },
+  "version": "0.0.0",
+  "description": "Timetracker fuer Jira Issues",
+  "license": "MIT",
+  "author": "",
+  "type": "commonjs",
+  "main": "./dist/timetracker.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "timetracker.openWebview",
+        "title": "Hello Timetracker"
+      }
+    ],
+    "configuration": {
+      "properties": {
+        "timetracker.JIRA_API_URL": {
+          "type": "string",
+          "default": "",
+          "description": "Jira Restapi URL"
+        },
+        "timetracker.JIRA_API_TOKEN": {
+          "type": "string",
+          "default": "",
+          "description": "Jira API Token"
+        },
+        "timetracker.JIRA_USER_NAME": {
+          "type": "string",
+          "default": "",
+          "description": "Jira Benutzername/Email"
+        },
+        "timetracker.JIRA_PROJECT_KEY": {
+          "type": "string",
+          "default": "",
+          "description": "Jira Project Key"
+        },
+        "jiraTimeTracker.ISSUE_TYPE_MAPPING": {
+          "type": "object",
+          "title": "Ticket-Typen Mapping",
+          "description": "Füge den Namen aus deinem Jira hinzu (Links) und wähle den internen Typ (Rechts).",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "BUG",
+              "FEATURE"
+            ]
+          },
+          "default": {
+            "Fehler": "BUG",
+            "Bug": "BUG",
+            "Unteraufgabe Fehler": "BUG",
+            "Unteraufgabe": "FEATURE",
+            "Aufgabe": "FEATURE",
+            "Story": "FEATURE"
+          }
+        },
+        "jiraTimeTracker.STATUS_MAPPING": {
+          "type": "object",
+          "title": "Status Mapping",
+          "description": "Füge den Status-Namen aus deinem Jira hinzu (Links) und wähle den internen Zustand (Rechts).",
+          "additionalProperties": {
+            "type": "string",
+            "enum": [
+              "TO_DO",
+              "IN_PROGRESS",
+              "TEST",
+              "DONE"
+            ]
+          },
+          "default": {
+            "To Do": "TO_DO",
+            "Offen": "TO_DO",
+            "Erfasst": "TO_DO",
+            "Backlog / Neu": "TO_DO",
+            "AD - In Bearbeitung": "IN_PROGRESS",
+            "In Bearbeitung": "IN_PROGRESS",
+            "In Entwicklung": "IN_PROGRESS",
+            "In Progress": "IN_PROGRESS",
+            "Im Test": "TEST",
+            "Bereit für Test": "TEST",
+            "Fertig": "DONE",
+            "Abgeschlossen": "DONE"
+          }
+        }
+      }
+    }
+  },
+  "enabledApiProposals": [
+    "extensionRuntime"
+  ],
+  "scripts": {
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.20.0",
+    "reflect-metadata": "0.2.2",
+    "tsyringe": "4.10.0"
+  },
+  "devDependencies": {
+    "@timetracker/api": "file:../shared",
+    "@types/node": "26.6.3",
+    "@types/vscode": "1.138.0",
+    "dotenv": "^18.0.5",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "typescript": "^5.9.3",
+    "webpack": "^5.94.0",
+    "webpack-cli": "^5.1.4"
+  }
+}

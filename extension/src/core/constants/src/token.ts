@@ -1,0 +1,1 @@
+export const EXTENSION_CONTEXT_TOKEN = Symbol('ExtensionContext');
