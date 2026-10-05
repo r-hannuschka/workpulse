@@ -1,0 +1,111 @@
+/* ==========================================================================
+   JIRAFLOW VS CODE WEBVIEW REBOOT / RESET
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box; // Berechenbare Größen für Grid & Flexbox
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+
+  // 1. Schriften nativ an die IDE koppeln
+  font-family: var(
+    --vscode-font-family,
+    -apple-system,
+    BlinkMacSystemFont,
+    'Segoe UI',
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif
+  );
+  font-size: var(--vscode-font-size, 13px);
+  font-weight: var(--vscode-font-weight, normal);
+  line-height: 1.5;
+
+  // 2. Kontraste an das geladene VS Code Theme binden
+  background-color: var(--vscode-sideBar-background);
+  color: var(--vscode-foreground);
+
+  // Verhindert hässliches Text-Flackern bei CSS-Animationen
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  // Verhindert horizontales Ausbrechen der gesamten Webview
+  overflow-x: hidden;
+}
+
+// 3. Typografie-Resets (Keine riesigen Webseiten-Ränder)
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: var(--vscode-editor-foreground, var(--vscode-foreground));
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+// 4. Interaktive Elemente zähmen (Inputs, Buttons)
+button,
+input,
+optgroup,
+select,
+textarea {
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  background: transparent;
+  border: none;
+
+  &:focus-visible {
+    // Wenn der Nutzer mit Tab navigiert, bekommt er den originalen IDE-Fokus-Rahmen
+    outline: 1px solid var(--vscode-focusBorder);
+    outline-offset: -1px;
+  }
+}
+
+// 5. Native Scrollbars für Chromium (VS Code Webview Prozess) erzwingen
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent; // Unsichtbarer Track für den cleanen Look
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--vscode-scrollbarSlider-background, rgba(121, 121, 121, 0.4));
+  border-radius: 5px;
+
+  &:hover {
+    background: var(--vscode-scrollbarSlider-hoverBackground, rgba(100, 100, 100, 0.7));
+  }
+
+  &:active {
+    background: var(--vscode-scrollbarSlider-activeBackground, rgba(100, 100, 100, 0.8));
+  }
+}
+
+// 6. Auswahlen (Texthighlight) anpassen
+::selection {
+  background-color: var(--vscode-editor-selectionBackground);
+  color: inherit;
+}

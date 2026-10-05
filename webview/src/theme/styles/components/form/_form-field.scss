@@ -1,0 +1,9 @@
+.form-field {
+  display: inline-flex;
+  flex-direction: column;
+
+  label {
+    font-weight: 600;
+    margin-bottom: .5rem;
+  }
+}

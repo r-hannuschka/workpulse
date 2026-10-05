@@ -1,0 +1,23 @@
+.jf-widget {
+  border: 1px solid var(--vscode-widget-border);
+  border-radius: 4px;
+  display: block;
+
+  &-header {
+    background-color: var(--vscode-activityBar-activeBackground, rgba(0, 0, 0, 0.15));
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  &-body {
+    padding: .5rem 1rem;
+  }
+
+  &-footer {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0 .5rem 0.25rem;
+  }
+}

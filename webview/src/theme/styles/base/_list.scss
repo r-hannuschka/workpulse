@@ -1,0 +1,12 @@
+/** Definition List */
+dl {
+  display: grid;
+  grid-template-columns: max-content auto;
+  row-gap: .5rem;
+
+  dd {
+    margin-inline-start: .5rem;
+    overflow-wrap: break-word; // Bricht lange Wörter/Pfade sauber um
+    word-break: break-word;     // Fallback für ältere Engines
+  }
+}

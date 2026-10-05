@@ -1,0 +1,11 @@
+<div class="jf-teaser" [class.is-open]="isOpen()">
+  <!-- Der jf-scroll-container fängt das Scrollen im offenen Zustand ab -->
+  <div class="jf-teaser-content">
+    <ng-content></ng-content>
+  </div>
+
+  <!-- Der Button toggelt einfach nur den Zustand -->
+  <span class="jf-teaser-toggle" (click)="isOpen.set(!isOpen())" role="button">
+    {{ isOpen() ? 'weniger' : 'mehr...' }}
+  </span>
+</div>

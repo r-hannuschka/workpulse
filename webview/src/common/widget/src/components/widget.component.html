@@ -1,0 +1,14 @@
+<div class="jf-widget-header">
+  <div class="title">{{ title() }}</div>
+  <div class="toolbar">
+    <ng-content select="[toolbar]"></ng-content>
+  </div>
+</div>
+
+<div class="jf-widget-body">
+  <ng-content></ng-content>
+</div>
+
+<div class="jf-widget-footer">
+  <button class="jf-btn" role="button" (click)="reloadWidget()">Reload</button>
+</div>
