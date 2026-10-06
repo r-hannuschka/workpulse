@@ -1,4 +1,11 @@
-export const routerConfig = {
-  dashboard: () => import('./components/dashboard.component').then((m) => m.DashboardComponent),
-  jiraIssuesList: () => import('@jira-flow/jira/feature-shell').then((m) => m.JiraIssuesListComponent)
-};
+import type { PortalRoute } from '@workpulse/core/portal-router';
+import { routes as jiraRoutes } from '@jira-flow/jira/feature-shell';
+
+export const routerConfig: PortalRoute[] = [
+  {
+    path: 'dashboard',
+    default: true,
+    component: () => import('./components/dashboard.component').then((m) => m.DashboardComponent),
+  },
+  ...jiraRoutes
+];

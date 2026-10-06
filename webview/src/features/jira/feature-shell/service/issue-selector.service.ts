@@ -1,8 +1,8 @@
 import { computed, inject, Service, signal } from '@angular/core';
-import { SessionStateSelectors, StartSession } from '@jira-flow/core/state';
 import { JiraStateSelectors, SelectIssue } from '@jira-flow/jira/data-access';
 import { Store } from '@ngxs/store';
 import { JiraIssueListItem } from '@workpulse/api';
+import { SessionStateSelectors, StartSession } from '@workpulse/core/state';
 
 @Service()
 export class IssueSelectorService {
@@ -40,9 +40,9 @@ export class IssueSelectorService {
     }
 
     // Sucht sowohl im Jira-Key (KVQAIP-123) als auch in der Summary (Titel)
-    return list.filter((issue) => 
-      issue.key.toLowerCase().includes(search) || 
-      issue.summary?.toLowerCase().includes(search)
+    return list.filter(
+      (issue) =>
+        issue.key.toLowerCase().includes(search) || issue.summary?.toLowerCase().includes(search),
     );
   });
 

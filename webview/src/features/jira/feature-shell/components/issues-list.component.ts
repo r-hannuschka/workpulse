@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { JiraFlowFacade } from '@jira-flow/core/api';
+import { JiraFlowFacade } from '@workpulse/core/api';
 
 @Component({
   selector: 'jira-issues-list',

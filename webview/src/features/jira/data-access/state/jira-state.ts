@@ -4,7 +4,7 @@ import { patch } from '@ngxs/store/operators';
 import { tap } from 'rxjs';
 import { FetchCurrentFocusedTask, FetchTasks, SelectIssue } from './jira-state.actions';
 import type { JiraStateModel } from './jira-state.model';
-import { JiraFlowFacade } from '@jira-flow/core/api';
+import { JiraFlowFacade } from '@workpulse/core/api';
 
 @State<JiraStateModel>({
   name: 'JiraState',

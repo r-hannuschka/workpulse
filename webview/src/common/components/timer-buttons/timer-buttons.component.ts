@@ -1,5 +1,5 @@
 import { Component, inject, input } from '@angular/core';
-import { StartSession, StopSession } from '@jira-flow/core/state';
+import { StartSession, StopSession } from '@workpulse/core/state';
 import { Store } from '@ngxs/store';
 
 @Component({

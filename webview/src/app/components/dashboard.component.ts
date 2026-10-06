@@ -11,10 +11,8 @@ import { MonthBookingsComponent } from '@jira-flow/timetracker/feature-shell';
   templateUrl: './dashboard.component.html',
   imports: [
     WidgetComponent,
-    CurrentFocusTaskWidgetComponent,
     MonthBookingsComponent,
     IssueSelectorWidget,
-    TimerButtonsComponent,
   ],
 })
 export class DashboardComponent {}

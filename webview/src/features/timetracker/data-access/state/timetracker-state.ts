@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { TimeTrackerFlowFacade } from '@jira-flow/core/api';
+import { TimeTrackerFlowFacade } from '@workpulse/core/api';
 import { Action, State, type StateContext } from '@ngxs/store';
 import { patch } from '@ngxs/store/operators';
 import { tap } from 'rxjs';

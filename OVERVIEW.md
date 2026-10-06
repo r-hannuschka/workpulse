@@ -27,7 +27,7 @@ flowchart LR
 
 | Paket          | Technologie                     | Zweck                                                                                                      |
 | -------------- | ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
-| **extension/** | TypeScript · esbuild · tsyringe | VSCode-Erweiterung: Command-System, Jira-Integration, Webview-Panel-Management                             |
+| **extension/** | TypeScript · Vite · tsyringe | VSCode-Erweiterung: Command-System, Jira-Integration, Webview-Panel-Management                             |
 | **webview/**   | Angular 22 · RxJS               | Dashboard-UI: Issues anzeigen, Zeit tracken, interaktive Tabelle mit Status-Farben                         |
 | **shared/**    | TypeScript                      | Geteilte Typ-Definitionen: Jira-DTOs, Command-Types, Mappings — wird von Extension **und** Webview benutzt |
 
@@ -102,7 +102,7 @@ npm run extension:watch    # Extension Watch-Mode
 cd webview && npm run start # Angular HMR-Server
 ```
 
-Die Extension nutzt **esbuild** für schnelles Kompilieren, der Webview ist eine standard Angular CLI Applikation.
+Die Extension nutzt **Vite** für schnelles Kompilieren, der Webview ist eine standard Angular CLI Applikation.
 
 ---
 

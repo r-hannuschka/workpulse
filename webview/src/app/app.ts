@@ -1,6 +1,6 @@
 import { CdkPortalOutlet } from '@angular/cdk/portal';
 import { Component, inject, signal } from '@angular/core';
-import { PortalRouterService } from './services/portal-router.service';
+import { PortalRouterService } from '@workpulse/core/portal-router';
 
 @Component({
   imports: [CdkPortalOutlet],

@@ -6,7 +6,7 @@
   "author": "Ralf Hannuschka",
   "scripts": {
     "webview:build": "npm run build --prefix webview",
-    "extension:watch": "node ./extension/esbuild --watch",
-    "extension:build": "node ./extension/esbuild"
+    "extension:watch": "npm run --prefix extension watch",
+    "extension:build": "npm run --prefix extension build"
   }
 }
