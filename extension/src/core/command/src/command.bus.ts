@@ -1,5 +1,5 @@
 import { BaseException, TimeoutException } from "@core/exception";
-import type { Command, CommandContainer, CommandErrorResponse, CommandResponse } from "@timetracker/api";
+import type { Command, CommandContainer, CommandErrorResponse, CommandResponse } from "@workpulse/api";
 import { createHash } from "crypto";
 import { singleton } from "tsyringe";
 import { CommandRegistry } from "./command.registry";

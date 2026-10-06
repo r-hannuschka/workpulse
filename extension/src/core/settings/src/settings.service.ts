@@ -1,6 +1,6 @@
 import { singleton } from "tsyringe";
 import { workspace } from "vscode";
-import type { StatusMapping, IssueTypeMapping } from "@timetracker/api";
+import type { StatusMapping, IssueTypeMapping } from "@workpulse/api";
 
 export type SettingKey =
   | "JIRA_API_URL"
@@ -19,6 +19,6 @@ export class SettingsService {
   get(key: "ISSUE_TYPE_MAPPING"): IssueTypeMapping;
   get(key: "STATUS_MAPPING"): StatusMapping;
   get(key: SettingKey): unknown {
-    return process.env[key] ?? workspace.getConfiguration("jiraTimeTracker").get(key);
+    return process.env[key] ?? workspace.getConfiguration("workpulse").get(key);
   }
 }

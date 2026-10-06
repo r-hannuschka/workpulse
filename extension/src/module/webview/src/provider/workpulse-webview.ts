@@ -5,7 +5,7 @@ import { inject, singleton } from "tsyringe";
 import { type ExtensionContext, Uri, ViewColumn, type WebviewPanel, window } from "vscode";
 
 @singleton()
-export class TimetrackerWebView {
+export class WorkpulseWebview {
 
   constructor(@inject(EXTENSION_CONTEXT_TOKEN) private readonly context: ExtensionContext) {}
 

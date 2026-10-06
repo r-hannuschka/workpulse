@@ -1,1 +1,1 @@
-export * from './src/timetracker-webview-module';
+export * from './src/workpulse-webview-module';

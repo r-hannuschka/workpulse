@@ -1,4 +1,4 @@
-import type { TimeEntry } from '@timetracker/api';
+import type { TimeEntry } from '@workpulse/api';
 
 export interface SessionStateModel {
   activeSession: TimeEntry | null;

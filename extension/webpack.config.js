@@ -9,7 +9,7 @@ module.exports = {
   
   // Dein Einstiegspunkt (Pfade ggf. anpassen, falls es src/timetracker.ts ist)
   entry: {
-    timetracker: './src/timetracker.ts' 
+    timetracker: './src/workpulse.ts' 
   },
   
   output: {

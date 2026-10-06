@@ -1,5 +1,5 @@
 import { SettingsService } from "@core/settings";
-import type { IssueTypeMapping, JiraIssue, JiraIssueListItem, JiraIssueListResponse, StatusMapping } from "@timetracker/api";
+import type { IssueTypeMapping, JiraIssue, JiraIssueListItem, JiraIssueListResponse, StatusMapping } from "@workpulse/api";
 import { singleton } from "tsyringe";
 import { JiraApiClient } from "../../infrastructure/jira-api-client";
 import type { JiraIssueDTO, JiraIssueListDTO, JiraIssueListItemDTO } from "../../infrastructure/model/jira-issue-dto";

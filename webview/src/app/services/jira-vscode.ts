@@ -5,7 +5,7 @@ import type {
   GetIssuesCommand,
   JiraIssue,
   JiraIssueListResponse,
-} from '@timetracker/api';
+} from '@workpulse/api';
 import type { Observable } from 'rxjs';
 import { VsCodeBridge } from './vscode-bridge';
 

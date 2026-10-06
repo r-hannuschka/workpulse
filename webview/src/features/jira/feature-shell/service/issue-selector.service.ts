@@ -2,7 +2,7 @@ import { computed, inject, Service, signal } from '@angular/core';
 import { SessionStateSelectors, StartSession } from '@jira-flow/core/state';
 import { JiraStateSelectors, SelectIssue } from '@jira-flow/jira/data-access';
 import { Store } from '@ngxs/store';
-import { JiraIssueListItem } from '@timetracker/api';
+import { JiraIssueListItem } from '@workpulse/api';
 
 @Service()
 export class IssueSelectorService {

@@ -1,4 +1,4 @@
-import type { JiraIssueListItem } from "@timetracker/api";
+import type { JiraIssueListItem } from "@workpulse/api";
 
 export class FetchTasks {
   static readonly type = '[Jira] fetch current tasks';

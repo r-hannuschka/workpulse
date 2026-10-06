@@ -1,11 +1,8 @@
 import { EXTENSION_CONTEXT_TOKEN } from "@core/constants";
-import type { TimeEntry, TimeEntryList, TimesData } from "@timetracker/api";
+import type { TimeEntry, TimeEntryList, TimesData } from "@workpulse/api";
 import { inject, singleton } from "tsyringe";
 import { ExtensionContext } from "vscode";
-import { TimeTrackerError } from "../exceptions/time-tracker-error.exception";
 import { TimesheetRepository } from "./timesheet.repository";
-
-type StopTrackingResult = { duration: number; date: string; id: string };
 
 @singleton()
 export class TimeTrackerService {
