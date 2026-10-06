@@ -71,4 +71,9 @@ export class JiraApiClient {
     const response = await this.client.post(path, body);
     return response.data;
   }
+
+  async get<TResponse = unknown>(path: string): Promise<TResponse> {
+    const response = await this.client.get(path);
+    return response.data;
+  }
 }

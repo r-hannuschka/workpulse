@@ -1,5 +1,4 @@
 import { inject } from '@angular/core';
-import type { ITimeTrackerFlowFacade } from '@jira-flow/core/api';
 import type {
   GetActiveTimerCommand,
   GetPeriodCommand,
@@ -9,6 +8,7 @@ import type {
   TimeEntry,
   TimeEntryList,
 } from '@workpulse/api';
+import type { ITimeTrackerFlowFacade } from '@workpulse/core/api';
 import type { Observable } from 'rxjs';
 import { VsCodeBridge } from './vscode-bridge';
 

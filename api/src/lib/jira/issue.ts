@@ -21,7 +21,12 @@ export interface JiraIssueListResponse {
   data: JiraIssueListItem[];
 }
 
-export interface JiraIssue extends JiraIssueListItem {
+/**
+ * Das aktuelle Fokus-Task des Users.
+ * Semantisch: genau EIN Issue, das der User gerade verfolgt (in-progress).
+ * Gleiche Struktur wie JiraIssue, aber eigener Typ fuer klare Abgrenzung.
+ */
+export interface FocusedIssue extends JiraIssueListItem {
   jiraUrl: string;
   description: string | null;
 }

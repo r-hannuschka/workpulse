@@ -1,8 +1,8 @@
 import { SettingsService } from "@core/settings";
-import type { IssueTypeMapping, JiraIssue, JiraIssueListItem, JiraIssueListResponse, StatusMapping } from "@workpulse/api";
+import type { FocusedIssue, IssueTypeMapping, JiraIssueListItem, JiraIssueListResponse, StatusMapping } from "@workpulse/api";
 import { singleton } from "tsyringe";
 import { JiraApiClient } from "../../infrastructure/jira-api-client";
-import type { JiraIssueDTO, JiraIssueListDTO, JiraIssueListItemDTO } from "../../infrastructure/model/jira-issue-dto";
+import type { FocusedIssueDTO, JiraIssueListDTO, JiraIssueListItemDTO } from "../../infrastructure/model/jira-issue-dto";
 
 @singleton()
 export class JiraSearchRepository {
@@ -39,7 +39,7 @@ export class JiraSearchRepository {
     };
   }
 
-  async getFocusTask(): Promise<JiraIssue | null> {
+  async getFocusTask(): Promise<FocusedIssue | null> {
     const statusMapping = this.settings.get("STATUS_MAPPING") ?? {};
     const projectKey = this.settings.get("JIRA_PROJECT_KEY");
 
@@ -50,7 +50,7 @@ export class JiraSearchRepository {
     const statusFilter = inProgressKeys.length > 0 ? `(${inProgressKeys.join(" OR ")})` : 'statusCategory = "In Progress"';
     const fullQuery = `project = ${projectKey} AND assignee = currentUser() AND ${statusFilter} ORDER BY updated DESC`;
 
-    const response = await this.api.post<JiraIssueListDTO<JiraIssueDTO>>("/search", {
+    const response = await this.api.post<JiraIssueListDTO<FocusedIssueDTO>>("/search", {
       jql: fullQuery,
       maxResults: 1,
       fields: ["summary", "issuetype", "priority", "status", "timetracking", "description"], // Später ggf. mehr Felder für Details
@@ -87,7 +87,7 @@ export class JiraSearchRepository {
     };
   }
 
-  private mapToJiraIssue(dto: JiraIssueDTO): JiraIssue {
+  private mapToJiraIssue(dto: FocusedIssueDTO): FocusedIssue {
     const base = this.mapToJiraIssueList(dto);
     const baseUrl = this.settings.get('JIRA_API_URL');
 

@@ -3,6 +3,7 @@ import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger, 
 import { JIRA_FLOW_WIDGET, type JiraFlowWidget } from '@jira-flow/common';
 import { IssueSelectorService } from '../service/issue-selector.service';
 import type { JiraIssueListItem } from '@workpulse/api';
+import { PortalRouterService } from '@workpulse/core/portal-router';
 
 @Component({
   selector: 'jiraflow-issue-selector-widget',
@@ -18,6 +19,9 @@ import type { JiraIssueListItem } from '@workpulse/api';
   ],
 })
 export class IssueSelectorWidget implements JiraFlowWidget {
+
+  private readonly routerService = inject(PortalRouterService)
+
   protected readonly issueSelectorService = inject(IssueSelectorService);
 
   readonly title = 'Issue Selektor';
@@ -30,6 +34,10 @@ export class IssueSelectorWidget implements JiraFlowWidget {
     const selectedOption = $event.option as MatOption<JiraIssueListItem>;
     this.issueSelectorService.selectIssue(selectedOption.value);
     this.issueSelectorService.setFilter('');
+  }
+
+  protected openDetails(key: JiraIssueListItem['key']) {
+    this.routerService.navigate('jira:issue-detail', { key });
   }
 
   refresh(): void {

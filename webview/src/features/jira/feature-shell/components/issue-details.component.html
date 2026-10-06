@@ -1,0 +1,88 @@
+<div class="workpulse-issue-details">
+  <h2>Issue Details</h2>
+
+  <!-- Loading -->
+  @if (issueResource.isLoading()) {
+    <p>Loading...</p>
+  }
+
+  <!-- Error -->
+  @if (issueResource.error(); as error) {
+    <p class="workpulse-error">Error: {{ error }}</p>
+  }
+
+  <!-- Details -->
+  @if (issueResource.value(); as issue) {
+    <!-- Header: Issue-Key + Summary -->
+    <div class="workpulse-issue-header">
+      <div class="workpulse-issue-meta">
+        <span class="workpulse-issue-key">{{ issue.key }}</span>
+        <span class="workpulse-issue-type">{{ issue.issueType }}</span>
+      </div>
+      <h2 class="workpulse-issue-summary">{{ issue.summary }}</h2>
+    </div>
+
+    <!-- Status & Priority -->
+    <div class="workpulse-issue-row">
+      <div>
+        <span class="workpulse-label">Status:</span>
+        <span>{{ issue.status }}</span>
+      </div>
+      <div>
+        <span class="workpulse-label">Kategorie:</span>
+        <span>{{ issue.statusCategory }}</span>
+      </div>
+      @if (issue.priority) {
+        <div>
+          <span class="workpulse-label">Priorität:</span>
+          <span>{{ issue.priority }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Assignee & Due Date -->
+    <div class="workpulse-issue-row">
+      @if (issue.assignee) {
+        <div>
+          <span class="workpulse-label">Zugewiesen:</span>
+          <span>{{ issue.assignee }}</span>
+        </div>
+      }
+      @if (issue.dueDate) {
+        <div>
+          <span class="workpulse-label">Fällig:</span>
+          <span>{{ issue.dueDate }}</span>
+        </div>
+      }
+    </div>
+
+    <!-- Time Tracking -->
+    <div class="workpulse-issue-row">
+      <div>
+        <span class="workpulse-label">Zeit belegt:</span>
+        <span>{{ issue.timeSpentSeconds }}s</span>
+      </div>
+      <div>
+        <span class="workpulse-label">Restzeit:</span>
+        <span>{{ issue.remainingTimeSeconds }}s</span>
+      </div>
+    </div>
+
+    <!-- Description -->
+    @if (issue.description) {
+      <div class="workpulse-issue-description">
+        <h3>Beschreibung</h3>
+        <p>{{ issue.description }}</p>
+      </div>
+    }
+
+    <!-- Jira Link -->
+    @if (issue.jiraUrl) {
+      <div>
+        <a [href]="issue.jiraUrl" target="_blank" rel="noopener noreferrer">
+          In Jira öffnen
+        </a>
+      </div>
+    }
+  }
+</div>

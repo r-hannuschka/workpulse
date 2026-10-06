@@ -34,7 +34,7 @@ export interface JiraIssueListItemDTO {
   };
 }
 
-export interface JiraIssueDTO extends JiraIssueListItemDTO {
+export interface FocusedIssueDTO extends JiraIssueListItemDTO {
   renderedFields: {
     description: string | null;
     timetracking: {
