@@ -12,7 +12,7 @@ export class JiraSearchRepository {
   ) {}
 
   async getIssues(): Promise<JiraIssueListResponse> {
-    const statusMapping = this.settings.get("STATUS_MAPPING");
+    const statusMapping = this.settings.get("STATUS_MAPPING") ?? {};
     const projectKey = this.settings.get("JIRA_PROJECT_KEY");
 
     const statusFilter = Object.entries(statusMapping)
@@ -40,7 +40,7 @@ export class JiraSearchRepository {
   }
 
   async getFocusTask(): Promise<JiraIssue | null> {
-    const statusMapping = this.settings.get("STATUS_MAPPING");
+    const statusMapping = this.settings.get("STATUS_MAPPING") ?? {};
     const projectKey = this.settings.get("JIRA_PROJECT_KEY");
 
     const inProgressKeys = Object.entries(statusMapping)
@@ -65,8 +65,8 @@ export class JiraSearchRepository {
   }
 
   private mapToJiraIssueList(dto: JiraIssueListItemDTO): JiraIssueListItem {
-    const issueTypeMapping = this.settings.get("ISSUE_TYPE_MAPPING");
-    const statusMapping = this.settings.get("STATUS_MAPPING");
+    const issueTypeMapping = this.settings.get("ISSUE_TYPE_MAPPING") ?? {};
+    const statusMapping = this.settings.get("STATUS_MAPPING") ?? {};
 
     const issueType = issueTypeMapping[dto.fields.issuetype.name] as IssueTypeMapping[string] | undefined;
     const status = statusMapping[dto.fields.status.name] as StatusMapping[string] | undefined;

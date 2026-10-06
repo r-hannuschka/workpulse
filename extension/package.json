@@ -1,5 +1,5 @@
 {
-  "name": "@workpulse",
+  "name": "workpulse",
   "publisher": "trueffelmafia",
   "displayName": "Workpulse",
   "engines": {
@@ -14,8 +14,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "timetracker.openWebview",
-        "title": "Hello Timetracker"
+        "command": "workpulse.openWebview",
+        "title": "Workpulse: open webview"
       }
     ],
     "configuration": {
@@ -40,7 +40,7 @@
           "default": "",
           "description": "Jira Project Key"
         },
-        "jiraTimeTracker.ISSUE_TYPE_MAPPING": {
+        "workpulse.ISSUE_TYPE_MAPPING": {
           "type": "object",
           "title": "Ticket-Typen Mapping",
           "description": "Füge den Namen aus deinem Jira hinzu (Links) und wähle den internen Typ (Rechts).",
@@ -60,7 +60,7 @@
             "Story": "FEATURE"
           }
         },
-        "jiraTimeTracker.STATUS_MAPPING": {
+        "workpulse.STATUS_MAPPING": {
           "type": "object",
           "title": "Status Mapping",
           "description": "Füge den Status-Namen aus deinem Jira hinzu (Links) und wähle den internen Zustand (Rechts).",
@@ -95,8 +95,8 @@
     "extensionRuntime"
   ],
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack --watch",
+    "build": "VITE_CONFIG_NATIVE_IGNORE_WARNING=true vite build",
+    "watch": "VITE_CONFIG_NATIVE_IGNORE_WARNING=true vite build --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
@@ -105,15 +105,14 @@
     "tsyringe": "4.10.0"
   },
   "devDependencies": {
-    "@workpulse/api": "file:../api",
+    "@rollup/plugin-node-resolve": "^16.0.3",
     "@types/node": "26.6.3",
     "@types/vscode": "1.138.0",
+    "@workpulse/api": "file:../api",
     "dotenv": "^18.0.5",
-    "ts-loader": "^9.5.1",
-    "ts-node": "^10.9.2",
-    "tsconfig-paths-webpack-plugin": "^4.1.0",
+    "esbuild": "^0.28.2",
     "typescript": "^5.9.3",
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4"
+    "vite": "^8.3.3",
+    "vite-plugin-commonjs": "^0.10.4"
   }
 }

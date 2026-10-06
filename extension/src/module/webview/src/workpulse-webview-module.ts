@@ -41,10 +41,11 @@ export class WorkpulseWebviewModule {
   private registerListener(panel: WebviewPanel): void {
     panel.webview.onDidReceiveMessage(
       async (commandContainer: CommandContainer) => {
+        console.log(`[webview] Command empfangen: ${commandContainer.command.type}`, commandContainer);
         const result = await this.commandController.exec(commandContainer);
 
         if (isErrorResponse(result)) {
-          this.notificationService.showError(`Command fehlgeschlagen: ${result.error.message}`, result.error);
+          this.notificationService.showError(`Command "${commandContainer.command.type}" fehlgeschlagen: ${result.error.message}`, result.error);
         }
 
         panel.webview.postMessage(result);

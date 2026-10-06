@@ -21,6 +21,7 @@ export class TimesheetRepository {
 
   constructor(@inject(EXTENSION_CONTEXT_TOKEN) private readonly context: ExtensionContext) {
     this.storageDir = Uri.joinPath(context.globalStorageUri, "booking-data");
+    console.log(`[timetracker] Storage Dir: ${this.storageDir.fsPath}`);
   }
 
   // --- Read Operations ---
