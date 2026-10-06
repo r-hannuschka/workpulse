@@ -1,5 +1,5 @@
 import { RegisterCommand, type CommandHandler } from "@core/command";
-import type { JiraIssueListResponse } from "@timetracker/api";
+import type { JiraIssueListResponse } from "@workpulse/api";
 import { container } from "tsyringe";
 import { JiraSearchRepository } from "../domain/repository/jira-search.repository";
 

@@ -1,4 +1,4 @@
-import type { TimeEntry } from "@timetracker/api";
+import type { TimeEntry } from "@workpulse/api";
 
 export class FetchActiveSession {
   static readonly type = '[Session] fetch active session';

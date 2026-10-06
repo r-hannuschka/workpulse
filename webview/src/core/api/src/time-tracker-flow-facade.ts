@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import type { StartTrackingResponse, TimeEntry, TimeEntryList } from '@timetracker/api';
+import type { StartTrackingResponse, TimeEntry, TimeEntryList } from '@workpulse/api';
 import type { Observable } from 'rxjs';
 
 export interface ITimeTrackerFlowFacade {

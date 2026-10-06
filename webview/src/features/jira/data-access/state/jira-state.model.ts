@@ -1,4 +1,4 @@
-import type { JiraIssue, JiraIssueListItem, JiraIssueListResponse } from '@timetracker/api';
+import type { JiraIssue, JiraIssueListItem, JiraIssueListResponse } from '@workpulse/api';
 
 export interface JiraStateModel {
   issues: JiraIssueListResponse | null;

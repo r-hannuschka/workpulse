@@ -2,7 +2,7 @@ import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 import { JIRA_FLOW_WIDGET, type JiraFlowWidget } from '@jira-flow/common';
 import { IssueSelectorService } from '../service/issue-selector.service';
-import type { JiraIssueListItem } from '@timetracker/api';
+import type { JiraIssueListItem } from '@workpulse/api';
 
 @Component({
   selector: 'jiraflow-issue-selector-widget',

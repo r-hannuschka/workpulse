@@ -1,12 +1,12 @@
 import { CommandController, isErrorResponse } from "@core/command";
 import { NotificationService } from "@core/notification";
-import type { CommandContainer } from "@timetracker/api";
+import type { CommandContainer } from "@workpulse/api";
 import { container, singleton } from "tsyringe";
 import type { WebviewPanel } from "vscode";
-import { TimetrackerWebView } from "./provider/timetracker-web-view";
+import { WorkpulseWebview } from "./provider/workpulse-webview";
 
 @singleton()
-export class TimetrackerWebviewModule {
+export class WorkpulseWebviewModule {
   private activePanel: WebviewPanel | undefined;
 
   constructor(
@@ -20,7 +20,7 @@ export class TimetrackerWebviewModule {
       return;
     }
 
-    const webview = container.resolve(TimetrackerWebView);
+    const webview = container.resolve(WorkpulseWebview);
     this.activePanel = webview.show();
 
     this.registerListener(this.activePanel);
@@ -41,10 +41,11 @@ export class TimetrackerWebviewModule {
   private registerListener(panel: WebviewPanel): void {
     panel.webview.onDidReceiveMessage(
       async (commandContainer: CommandContainer) => {
+        console.log(`[webview] Command empfangen: ${commandContainer.command.type}`, commandContainer);
         const result = await this.commandController.exec(commandContainer);
 
         if (isErrorResponse(result)) {
-          this.notificationService.showError(`Command fehlgeschlagen: ${result.error.message}`, result.error);
+          this.notificationService.showError(`Command "${commandContainer.command.type}" fehlgeschlagen: ${result.error.message}`, result.error);
         }
 
         panel.webview.postMessage(result);

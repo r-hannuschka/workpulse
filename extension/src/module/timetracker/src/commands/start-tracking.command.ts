@@ -1,7 +1,7 @@
 import { RegisterCommand, type CommandHandler } from "@core/command";
 import { TimeTrackerService } from "../services/time-tracker.service";
 import { container } from "tsyringe";
-import type { StartTrackingCommand, StartTrackingResponse } from "@timetracker/api";
+import type { StartTrackingCommand, StartTrackingResponse } from "@workpulse/api";
 
 @RegisterCommand("timetracker:start-tracking")
 export class StartTrackingHandler implements CommandHandler<StartTrackingResponse> {

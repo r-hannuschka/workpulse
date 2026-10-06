@@ -1,5 +1,5 @@
 import { InjectionToken, type Signal } from '@angular/core';
-import { JiraIssueListResponse, type JiraIssue } from '@timetracker/api';
+import { JiraIssueListResponse, type JiraIssue } from '@workpulse/api';
 import type { Observable } from 'rxjs';
 
 export interface IJiraFlowFacade {

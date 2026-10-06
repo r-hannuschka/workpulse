@@ -1,5 +1,5 @@
 import { EXTENSION_CONTEXT_TOKEN } from "@core/constants";
-import type { TimeEntry, TimesData } from "@timetracker/api";
+import type { TimeEntry, TimesData } from "@workpulse/api";
 import { inject, singleton } from "tsyringe";
 import { ExtensionContext, Uri, workspace } from "vscode";
 import { EntryNotFoundException } from "../exceptions/entry-not-found.exception";
@@ -21,6 +21,7 @@ export class TimesheetRepository {
 
   constructor(@inject(EXTENSION_CONTEXT_TOKEN) private readonly context: ExtensionContext) {
     this.storageDir = Uri.joinPath(context.globalStorageUri, "booking-data");
+    console.log(`[timetracker] Storage Dir: ${this.storageDir.fsPath}`);
   }
 
   // --- Read Operations ---

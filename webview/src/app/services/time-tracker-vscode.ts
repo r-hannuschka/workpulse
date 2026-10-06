@@ -8,7 +8,7 @@ import type {
   StopTrackingCommand,
   TimeEntry,
   TimeEntryList,
-} from '@timetracker/api';
+} from '@workpulse/api';
 import type { Observable } from 'rxjs';
 import { VsCodeBridge } from './vscode-bridge';
 

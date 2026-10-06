@@ -1,4 +1,4 @@
-import type { Command } from "@timetracker/api";
+import type { Command } from "@workpulse/api";
 
 export interface CommandHandler<TResult = unknown> {
   execute(): Promise<TResult> | TResult;

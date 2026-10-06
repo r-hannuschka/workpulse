@@ -4,7 +4,7 @@ import type {
   CommandContainer,
   CommandErrorResponse,
   CommandResponse,
-} from '@timetracker/api';
+} from '@workpulse/api';
 import { filter, first, fromEvent, map, type Observable } from 'rxjs';
 
 type Response<T = unknown> = CommandResponse<T> | CommandErrorResponse;
