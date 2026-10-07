@@ -1,0 +1,13 @@
+<mat-toolbar>
+  @for (item of navItems; track item.path) {
+    <a
+      mat-button
+      [class.active]="isActive(item.path)"
+      (click)="navigate(item.path)"
+      [disableRipple]="true"
+    >
+      <mat-icon class="workpulse-icon-home"></mat-icon>
+      {{ item.label }}
+    </a>
+  }
+</mat-toolbar>

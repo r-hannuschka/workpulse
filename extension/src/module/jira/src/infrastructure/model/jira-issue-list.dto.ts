@@ -1,3 +1,10 @@
+/**
+ * Paginierte Issue-Liste — POST /rest/api/2/search
+ *
+ * Antwort auf JQL-Abfragen, enthält schlanke Issue-Items
+ * (keine renderedFields, keine vollständigen Beschreibungen).
+ */
+
 export interface JiraIssueListDTO<T extends JiraIssueListItemDTO = JiraIssueListItemDTO> {
   total: number;
   maxResults: number;
@@ -30,20 +37,6 @@ export interface JiraIssueListItemDTO {
       originalEstimateSeconds?: number;
       remainingEstimateSeconds?: number;
       timeSpentSeconds?: number;
-    };
-  };
-}
-
-export interface FocusedIssueDTO extends JiraIssueListItemDTO {
-  renderedFields: {
-    description: string | null;
-    timetracking: {
-      originalEstimate: string | null;
-      originalEstimateSeconds: number | null;
-      remainingEstimate: string | null;
-      remainingEstimateSeconds: number | null;
-      timeSpend: string | null;
-      timeSpentSeconds: number | null;
     };
   };
 }

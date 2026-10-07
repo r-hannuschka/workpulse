@@ -1,0 +1,8 @@
+.mat-mdc-button {
+  --mat-button-text-label-text-font: var(--vscode-font-family), sans-serif;
+  --mat-button-text-label-text-size: 1rem;
+  --mat-button-text-container-shape: 4px;
+  --mat-button-text-container-height: 30px;
+  --mat-button-text-pressed-state-layer-opacity: var(--mat-button-text-hover-state-layer-opacity);
+  --mat-button-text-touch-target-size: 38px;
+}

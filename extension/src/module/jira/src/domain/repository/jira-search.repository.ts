@@ -2,7 +2,8 @@ import { SettingsService } from "@core/settings";
 import type { FocusedIssue, IssueTypeMapping, JiraIssueListItem, JiraIssueListResponse, StatusMapping } from "@workpulse/api";
 import { singleton } from "tsyringe";
 import { JiraApiClient } from "../../infrastructure/jira-api-client";
-import type { FocusedIssueDTO, JiraIssueListDTO, JiraIssueListItemDTO } from "../../infrastructure/model/jira-issue-dto";
+import type { JiraIssueListDTO, JiraIssueListItemDTO } from "../../infrastructure/model/jira-issue-list.dto";
+import type { FocusedIssueDTO } from "../../infrastructure/model/jira-focused-issue.dto";
 
 @singleton()
 export class JiraSearchRepository {

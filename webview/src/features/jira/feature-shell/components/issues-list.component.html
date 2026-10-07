@@ -1,3 +1,5 @@
+<h3>Aufgabenliste</h3>
+
 @if (resource.isLoading()) {
   <h1>Loading</h1>
 }
@@ -7,6 +9,7 @@
 }
 
 @if (resource.hasValue()) {
+
   <div>Count: {{ resource.value().count }}</div>
   <div>Total Issues: {{ resource.value().total }}</div>
 }
