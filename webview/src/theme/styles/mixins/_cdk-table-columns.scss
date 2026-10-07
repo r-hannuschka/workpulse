@@ -1,0 +1,51 @@
+/**
+ * @see https://stackoverflow.com/a/54920508/9493539
+ */
+@mixin cdk-table-columns($columns) {
+  .cdk-column- {
+    @each $colName, $props in $columns {
+      $width: map-get($props, 'width');
+      $verticalAlign: map-get($props, 'verticalAlign');
+      $minWidth: map-get($props, 'min-width');
+      $fontSize: map-get($props, 'font-size');
+      $textAlign: map-get($props, 'text-align');
+      $textOverflow: map-get($props, 'text-overflow');
+
+      @if $width == null {
+        $width: auto;
+      }
+
+      @if $verticalAlign == null {
+        $verticalAlign: top;
+      }
+
+      @if $fontSize == null {
+        $fontSize: inherit;
+      }
+
+      @if $textAlign == null {
+        $textAlign: left;
+      }
+
+      @if $textOverflow != null {
+        &#{$colName} {
+          text-overflow: $textOverflow;
+        }
+      }
+
+      @if $textOverflow == 'ellipsis' {
+        &#{$colName} {
+          overflow: hidden;
+        }
+      }
+
+      &#{$colName} {
+        width: $width;
+        vertical-align: $verticalAlign;
+        min-width: $minWidth;
+        font-size: $fontSize;
+        text-align: $textAlign;
+      }
+    }
+  }
+}

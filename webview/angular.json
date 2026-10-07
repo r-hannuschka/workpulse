@@ -20,6 +20,9 @@
             "deleteOutputPath": false,
             "browser": "src/main.ts",
             "tsConfig": "tsconfig.app.json",
+            "stylePreprocessorOptions": {
+              "includePaths": ["src/theme/styles/mixins", "src/theme/styles/functions"] 
+            },
             "assets": [
               {
                 "glob": "**/*",

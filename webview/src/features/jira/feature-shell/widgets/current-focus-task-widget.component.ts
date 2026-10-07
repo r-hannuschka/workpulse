@@ -1,7 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import {
-  JfTeaserComponent,
+  workpulseTeaserComponent,
   JIRA_FLOW_WIDGET,
   SafeHtmlPipe,
   type JiraFlowWidget,
@@ -12,7 +12,7 @@ import { FetchCurrentFocusedTask, FetchTasks, JiraStateSelectors } from '../../d
 @Component({
   selector: 'jiraflow-current-focus-task',
   templateUrl: './current-focus-task-widget.component.html',
-  imports: [SafeHtmlPipe, JfTeaserComponent],
+  imports: [SafeHtmlPipe, workpulseTeaserComponent],
   providers: [
     {
       provide: JIRA_FLOW_WIDGET,

@@ -1,8 +1,8 @@
 import { SettingsService } from "@core/settings";
-import type { FocusedIssue, IssueTypeMapping, JiraIssueListItem, JiraIssueListResponse, StatusMapping } from "@workpulse/api";
+import type { FocusedIssue, IssueTypeMapping, IssueListItem, IssueList, StatusMapping } from "@workpulse/api";
 import { singleton } from "tsyringe";
 import { JiraApiClient } from "../../infrastructure/jira-api-client";
-import type { JiraIssueListDTO, JiraIssueListItemDTO } from "../../infrastructure/model/jira-issue-list.dto";
+import type { IssueListDTO, IssueListItemDTO } from "../../infrastructure/model/jira-issue-list.dto";
 import type { FocusedIssueDTO } from "../../infrastructure/model/jira-focused-issue.dto";
 
 @singleton()
@@ -12,7 +12,7 @@ export class JiraSearchRepository {
     private readonly settings: SettingsService,
   ) {}
 
-  async getIssues(): Promise<JiraIssueListResponse> {
+  async getIssues(): Promise<IssueList> {
     const statusMapping = this.settings.get("STATUS_MAPPING") ?? {};
     const projectKey = this.settings.get("JIRA_PROJECT_KEY");
 
@@ -25,7 +25,7 @@ export class JiraSearchRepository {
     const fullQuery = statusFilter ? `${baseQuery} AND ${statusFilter}` : baseQuery;
 
     // Fällt automatisch auf das schlanke JiraIssueListItemDTO zurück
-    const response = await this.api.post<JiraIssueListDTO>("/search", {
+    const response = await this.api.post<IssueListDTO>("/search", {
       jql: fullQuery,
       maxResults: 50,
       fields: ["summary", "issuetype", "priority", "status", "timetracking"],
@@ -51,7 +51,7 @@ export class JiraSearchRepository {
     const statusFilter = inProgressKeys.length > 0 ? `(${inProgressKeys.join(" OR ")})` : 'statusCategory = "In Progress"';
     const fullQuery = `project = ${projectKey} AND assignee = currentUser() AND ${statusFilter} ORDER BY updated DESC`;
 
-    const response = await this.api.post<JiraIssueListDTO<FocusedIssueDTO>>("/search", {
+    const response = await this.api.post<IssueListDTO<FocusedIssueDTO>>("/search", {
       jql: fullQuery,
       maxResults: 1,
       fields: ["summary", "issuetype", "priority", "status", "timetracking", "description"], // Später ggf. mehr Felder für Details
@@ -65,7 +65,7 @@ export class JiraSearchRepository {
     return this.mapToJiraIssue(response.issues[0]);
   }
 
-  private mapToJiraIssueList(dto: JiraIssueListItemDTO): JiraIssueListItem {
+  private mapToJiraIssueList(dto: IssueListItemDTO): IssueListItem {
     const issueTypeMapping = this.settings.get("ISSUE_TYPE_MAPPING") ?? {};
     const statusMapping = this.settings.get("STATUS_MAPPING") ?? {};
 

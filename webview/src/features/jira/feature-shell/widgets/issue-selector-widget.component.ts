@@ -2,7 +2,7 @@ import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
 import { JIRA_FLOW_WIDGET, type JiraFlowWidget } from '@jira-flow/common';
 import { IssueSelectorService } from '../service/issue-selector.service';
-import type { JiraIssueListItem } from '@workpulse/api';
+import type { IssueListItem } from '@workpulse/api';
 import { PortalRouterService } from '@workpulse/core/portal-router';
 
 @Component({
@@ -26,17 +26,17 @@ export class IssueSelectorWidget implements JiraFlowWidget {
 
   readonly title = 'Issue Selektor';
 
-  protected displayWithIssueKey(item: JiraIssueListItem): string {
+  protected displayWithIssueKey(item: IssueListItem): string {
     return `[${item.issueType}]: ${item.key}`;
   }
 
   protected onOptionSelected($event: MatAutocompleteSelectedEvent) {
-    const selectedOption = $event.option as MatOption<JiraIssueListItem>;
+    const selectedOption = $event.option as MatOption<IssueListItem>;
     this.issueSelectorService.selectIssue(selectedOption.value);
     this.issueSelectorService.setFilter('');
   }
 
-  protected openDetails(key: JiraIssueListItem['key']) {
+  protected openDetails(key: IssueListItem['key']) {
     this.routerService.navigate('jira:issue-detail', { key });
   }
 

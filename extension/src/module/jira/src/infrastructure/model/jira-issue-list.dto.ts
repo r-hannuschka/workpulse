@@ -5,14 +5,14 @@
  * (keine renderedFields, keine vollständigen Beschreibungen).
  */
 
-export interface JiraIssueListDTO<T extends JiraIssueListItemDTO = JiraIssueListItemDTO> {
+export interface IssueListDTO<T extends IssueListItemDTO = IssueListItemDTO> {
   total: number;
   maxResults: number;
   startAt: number;
   issues: T[];
 }
 
-export interface JiraIssueListItemDTO {
+export interface IssueListItemDTO {
   id: string;
   key: string;
   fields: {

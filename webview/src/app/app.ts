@@ -7,6 +7,9 @@ import { ToolbarComponent } from './components/toolbar.component';
   imports: [CdkPortalOutlet, ToolbarComponent],
   selector: 'app-root',
   templateUrl: './app.html',
+  host: {
+    class: 'workpulse'
+  }
 })
 export class App {
   protected readonly portalRouterService = inject(PortalRouterService);

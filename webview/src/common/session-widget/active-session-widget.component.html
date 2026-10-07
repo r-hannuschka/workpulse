@@ -1,0 +1,12 @@
+@if (sessionKey(); as key) {
+  <dl class="active-session">
+    <dt>Issue:</dt>
+    <dd class="issue-key">{{ key }}</dd>
+
+    <dt>Start:</dt>
+    <dd class="start-time">{{ startAt() | date: 'HH:mm' }}</dd>
+
+    <dt>Dauer:</dt>
+    <dd class="elapsed">{{ elapsed.value() }}</dd>
+  </dl>
+}

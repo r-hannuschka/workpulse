@@ -5,7 +5,7 @@ import type {
   GetIssueDetailCommand,
   GetIssuesCommand,
   JiraIssueDetails,
-  JiraIssueListResponse,
+  IssueList,
 } from '@workpulse/api';
 import type { IJiraFlowFacade } from '@workpulse/core/api';
 import type { Observable } from 'rxjs';
@@ -14,11 +14,11 @@ import { VsCodeBridge } from './vscode-bridge';
 export class JiraVsCode implements IJiraFlowFacade {
   private readonly vscodeBridge = inject(VsCodeBridge);
 
-  list(): Observable<JiraIssueListResponse> {
+  list(): Observable<IssueList> {
     const command: GetIssuesCommand = {
       type: 'jira:get-issues',
     };
-    return this.vscodeBridge.request<JiraIssueListResponse>(command);
+    return this.vscodeBridge.request<IssueList>(command);
   }
 
   getCurrentInProgressTask(): Observable<FocusedIssue | null> {

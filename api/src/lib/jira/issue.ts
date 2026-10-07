@@ -1,7 +1,7 @@
 import type { IssueType } from "./mappings";
 import type { IssueStatus } from "./mappings";
 
-export interface JiraIssueListItem {
+export interface IssueListItem {
   id: string;
   key: string;
   summary: string;
@@ -15,10 +15,10 @@ export interface JiraIssueListItem {
   timeSpentSeconds: number | undefined;
 }
 
-export interface JiraIssueListResponse {
+export interface IssueList {
   total: number;
   count: number;
-  data: JiraIssueListItem[];
+  data: IssueListItem[];
 }
 
 /**
@@ -26,7 +26,7 @@ export interface JiraIssueListResponse {
  * Semantisch: genau EIN Issue, das der User gerade verfolgt (in-progress).
  * Gleiche Struktur wie JiraIssue, aber eigener Typ fuer klare Abgrenzung.
  */
-export interface FocusedIssue extends JiraIssueListItem {
+export interface FocusedIssue extends IssueListItem {
   jiraUrl: string;
   description: string | null;
 }
