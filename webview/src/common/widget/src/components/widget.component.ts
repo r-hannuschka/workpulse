@@ -2,11 +2,11 @@ import { Component, computed, contentChild, ViewEncapsulation } from '@angular/c
 import { JIRA_FLOW_WIDGET } from '../static/tokens';
 
 @Component({
-  selector: 'jiraflow-widget',
+  selector: 'workpulse-widget',
   templateUrl: './widget.component.html',
   encapsulation: ViewEncapsulation.None,
   host: {
-    class: 'jf-widget',
+    class: 'workpulse-widget',
   },
 })
 export class WidgetComponent {

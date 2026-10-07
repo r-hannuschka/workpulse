@@ -1,9 +1,9 @@
-import type { FocusedIssue, JiraIssueListItem, JiraIssueListResponse } from '@workpulse/api';
+import type { FocusedIssue, IssueListItem, IssueList } from '@workpulse/api';
 
 export interface JiraStateModel {
-  issues: JiraIssueListResponse | null;
+  issues: IssueList | null;
 
-  selectedIssue?: JiraIssueListItem;
+  selectedIssue?: IssueListItem;
 
   currentFocusTask: FocusedIssue | null;
 }

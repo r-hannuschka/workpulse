@@ -1,4 +1,5 @@
-@use "../variables/icons" as *;
+@use '../variables/icons' as *;
+@use '../functions/rem-calc' as *;
 
 @font-face {
   font-family: '#{$icomoon-font-family}';
@@ -11,7 +12,8 @@
   font-display: block;
 }
 
-[class^="workpulse-icon-"], [class*=" workpulse-icon-"] {
+[class^='workpulse-icon-'],
+[class*=' workpulse-icon-'] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: '#{$icomoon-font-family}' !important;
   speak: never;
@@ -20,6 +22,7 @@
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+  font-size: rem-calc(20px) !important;
 
   /* Better Font Rendering =========== */
   -webkit-font-smoothing: antialiased;
@@ -28,13 +31,72 @@
 
 .workpulse-icon-home {
   &:before {
-    content: $workpulse-icon-home;     
+    content: $workpulse-icon-home;
   }
 }
 
 .workpulse-icon-task-list {
   &:before {
-    content: $workpulse-icon-task-list;     
-    color: #e8eaed;
+    content: $workpulse-icon-task-list;
+  }
+}
+
+.workpulse-icon-start {
+  &:before {
+    content: $workpulse-icon-start;
+  }
+}
+
+.workpulse-icon-stop {
+  &:before {
+    content: $workpulse-icon-stop;
+  }
+}
+
+.workpulse-icon-preview {
+  &:before {
+    content: $workpulse-icon-preview;     
+  }
+}
+
+.workpulse-icon-toolkit {
+  &:before {
+    content: $workpulse-icon-toolkit;     
+  }
+}
+
+.workpulse-icon-feature {
+  &:before {
+    content: $workpulse-icon-extension;     
+  }
+}
+
+.workpulse-icon-bug {
+  &:before {
+    content: $workpulse-icon-bug;     
+  }
+}
+
+.workpulse-icon-open {
+  &:before {
+    content: $workpulse-icon-open;     
+  }
+}
+
+.workpulse-icon-timeline {
+  &:before {
+    content: $workpulse-icon-timeline;     
+  }
+}
+
+.workpulse-icon-test {
+  &:before {
+    content: $workpulse-icon-test;     
+  }
+}
+
+.workpulse-icon-speed {
+  &:before {
+    content: $workpulse-icon-speed;     
   }
 }

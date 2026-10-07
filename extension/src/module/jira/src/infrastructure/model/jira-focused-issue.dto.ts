@@ -1,14 +1,14 @@
 /**
  * Liste-Item mit zusätzlichen renderedFields — für den fokussierten Detailansatz
  *
- * Im Gegensatz zu JiraIssueListItemDTO enthält dieses Interface
+ * Im Gegensatz zu IssueListItemDTO enthält dieses Interface
  * gerenderte (HTML-formatierte) Felder, insbesondere die vollständige
  * Beschreibung und detailliertes TimeTracking.
  */
 
-import type { JiraIssueListItemDTO } from "./jira-issue-list.dto";
+import type { IssueListItemDTO } from "./jira-issue-list.dto";
 
-export interface FocusedIssueDTO extends JiraIssueListItemDTO {
+export interface FocusedIssueDTO extends IssueListItemDTO {
   renderedFields: {
     description: string | null;
     timetracking: {

@@ -1,9 +1,1 @@
 @use './theme/styles/' as *;
-@use '@angular/material' as mat;
-
-
-// 1. Die Kern-Funktionalität und Mixins von Angular Material laden
-@include mat.core();
-
-// 2. Das nackte, funktionale CSS für Overlays und Autocomplete laden
-@import '@angular/material/prebuilt-themes/azure-blue.css';

@@ -1,0 +1,20 @@
+@use 'cdk-table-columns' as *;
+
+jira-issues-list {
+  h3 {
+    margin: 0 0 1rem;
+    font-size: 1.25rem;
+  }
+
+  table {
+    table-layout: fixed;
+
+    @include cdk-table-columns(
+      (
+        key: (
+          width: 40px,
+        ),
+      )
+    );
+  }
+}

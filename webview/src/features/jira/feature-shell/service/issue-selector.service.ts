@@ -1,7 +1,7 @@
 import { computed, inject, Service, signal } from '@angular/core';
 import { JiraStateSelectors, SelectIssue } from '@jira-flow/jira/data-access';
 import { Store } from '@ngxs/store';
-import { JiraIssueListItem } from '@workpulse/api';
+import { IssueListItem } from '@workpulse/api';
 import { SessionStateSelectors, StartSession } from '@workpulse/core/state';
 
 @Service()
@@ -46,7 +46,7 @@ export class IssueSelectorService {
     );
   });
 
-  selectIssue(issue?: JiraIssueListItem) {
+  selectIssue(issue?: IssueListItem) {
     this.store.dispatch(new SelectIssue(issue));
   }
 

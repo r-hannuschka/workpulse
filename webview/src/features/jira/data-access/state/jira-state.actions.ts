@@ -1,4 +1,4 @@
-import type { JiraIssueListItem } from "@workpulse/api";
+import type { IssueListItem } from "@workpulse/api";
 
 export class FetchTasks {
   static readonly type = '[Jira] fetch current tasks';
@@ -11,5 +11,5 @@ export class FetchCurrentFocusedTask {
 export class SelectIssue {
   static readonly type = '[Jira] selektiere Issue';
 
-  constructor(public readonly issue?: JiraIssueListItem) {}
+  constructor(public readonly issue?: IssueListItem) {}
 }

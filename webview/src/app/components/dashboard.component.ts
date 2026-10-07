@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { TimerButtonsComponent, WidgetComponent } from '@jira-flow/common';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { ActiveSessionWidgetComponent, TimerButtonsComponent, WidgetComponent } from '@jira-flow/common';
 import {
   CurrentFocusTaskWidgetComponent,
   IssueSelectorWidget,
@@ -7,12 +7,15 @@ import {
 import { MonthBookingsComponent } from '@jira-flow/timetracker/feature-shell';
 
 @Component({
-  selector: 'jiraflow-dashboard',
+  selector: 'workpulse-dashboard',
   templateUrl: './dashboard.component.html',
+  styleUrl: './dashboard.component.scss',
+  encapsulation: ViewEncapsulation.None,
   imports: [
     WidgetComponent,
     MonthBookingsComponent,
     IssueSelectorWidget,
+    ActiveSessionWidgetComponent,
   ],
 })
 export class DashboardComponent {}

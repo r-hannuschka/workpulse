@@ -7,7 +7,7 @@
 @use './core';
 
 // Material- und Komponenten-Styles
-@use './angular-material'; 
+@use './angular-material';
 @use './components';
 
 // ==========================================================================
@@ -18,11 +18,13 @@
 @include mat.core();
 
 // Definiert die Theme-Konfiguration
-$dark-theme: mat.define-theme((
-  color: (
-    theme-type: dark
+$dark-theme: mat.define-theme(
+  (
+    color: (
+      theme-type: dark,
+    ),
   )
-));
+);
 
 // ==========================================================================
 // 3. DEIN GLOBALER THEME-BLOCK (Hier gehört er hin)
@@ -55,4 +57,22 @@ $dark-theme: mat.define-theme((
   // --- STATUS (Fehler & Warnungen) ---
   --mat-sys-error: var(--vscode-editorError-foreground);
   --mat-sys-on-error: var(--vscode-editor-background);
+}
+
+.workpulse {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+
+  &-header {
+    flex-shrink: 1;
+  }
+
+  &-body {
+    flex-grow: 1;
+    overflow: auto;
+    padding: .5rem 1rem;
+  }
 }
