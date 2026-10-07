@@ -35,6 +35,10 @@ export class PortalRouterService {
     },
   });
 
+  getCurrentPath(): string | null {
+    return this.activeRoute()?.path ?? null;
+  }
+
   private createInjector(params?: RouteParams) {
     if (!params) {
       return this.injector;

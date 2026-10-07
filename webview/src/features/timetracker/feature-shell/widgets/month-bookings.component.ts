@@ -83,7 +83,7 @@ export class MonthBookingsComponent implements JiraFlowWidget {
         const diffInSeconds = differenceInSeconds(timeEntry.endAt, timeEntry.startAt);
 
         // 2. FILTER: 7.4 Minuten = 444 Sekunden. Alles darunter fliegt raus!
-        if (diffInSeconds < 4) {
+        if (diffInSeconds < 444) {
           return minutes;
         }
 

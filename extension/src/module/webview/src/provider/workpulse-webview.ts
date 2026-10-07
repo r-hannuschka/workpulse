@@ -55,7 +55,7 @@ export class WorkpulseWebview {
 
   private injectCSP(panel: WebviewPanel, html: string): string {
     const cspSource = panel.webview.cspSource;
-    const cspMeta = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src ${cspSource} 'unsafe-inline' 'unsafe-eval'; style-src ${cspSource} 'unsafe-inline'; img-src ${cspSource} data:;">`;
+    const cspMeta = `<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src ${cspSource} 'unsafe-inline' 'unsafe-eval'; style-src ${cspSource} 'unsafe-inline'; font-src ${cspSource}; img-src ${cspSource} data:;">`;
 
     return html.replace("<head>", `<head>${cspMeta}`);
   }
