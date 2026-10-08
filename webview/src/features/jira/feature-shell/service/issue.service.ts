@@ -1,10 +1,10 @@
-import { inject, Service } from '@angular/core';
+import { computed, inject, Service, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { JiraStateSelectors } from '@workpulse/jira/data-access';
 import { Store } from '@ngxs/store';
 import type { IssueListItem, JiraIssueDetails } from '@workpulse/api';
-import { JiraFlowFacade } from '@workpulse/core/api';
+import { JiraFlowFacade, LoggerFacade } from '@workpulse/core/api';
 import { SessionStateSelectors, StartSession, StopSession } from '@workpulse/core/state';
+import { FetchTasks, JiraStateSelectors } from '@workpulse/jira/data-access';
 import { map } from 'rxjs';
 
 /**
@@ -17,10 +17,12 @@ import { map } from 'rxjs';
 export class IssueService {
   private readonly store = inject(Store);
   private readonly jiraApi = inject(JiraFlowFacade);
+  private readonly logger = inject(LoggerFacade);
 
   private readonly issueList = this.store.select(JiraStateSelectors.issues);
   private readonly activeSession = this.store.selectSignal(SessionStateSelectors.activeSession);
 
+  readonly suche = signal<string>('');
 
   /** Issue-Liste mit Tracking-Highlight – der Issue mit aktivem Timer ist über isTracking erkennbar */
   readonly list = rxResource({
@@ -47,9 +49,41 @@ export class IssueService {
     },
   });
 
+  readonly data = computed(() => {
+    const resource = this.list;
+
+    if (resource.isLoading()) {
+      return [];
+    }
+
+    if (resource.error()) {
+      this.logger.error(
+        `Issues konnten nicht geladen werden. Error: ${resource.error()?.message}`,
+        'IssueService',
+      );
+      return [];
+    }
+
+    const suche = this.suche().trim().toLocaleLowerCase();
+    const data = resource.value()?.data ?? [];
+
+    console.log(data);
+    if (!suche) {
+      return data;
+    }
+
+    return data.filter(({ summary, key }) => {
+      return [summary, key].some((value) => value.toLocaleLowerCase().includes(suche));
+    });
+  });
+
   /** Issue-Details via Jira REST API nach Key laden */
   getDetails(key: JiraIssueDetails['key']) {
     return this.jiraApi.getIssueByKey(key);
+  }
+
+  reload() {
+    this.store.dispatch(new FetchTasks());
   }
 
   startSession(issue: IssueListItem) {

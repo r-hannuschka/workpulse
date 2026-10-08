@@ -13,6 +13,7 @@
     "module": "preserve",
     "paths": {
       "@workpulse/core/*": ["./src/core/*/index.ts"],
+      "@workpulse/common/*": ["./src/common/*/index.ts"],
       "@workpulse/common": ["./src/common/index.ts"],
       "@workpulse/*/data-access": ["./src/features/*/data-access/index.ts"],
       "@workpulse/*/feature-shell": ["./src/features/*/feature-shell/index.ts"],

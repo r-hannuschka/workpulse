@@ -1,72 +1,54 @@
 <div class="workpulse-issue-details">
-  <h2>Issue Details</h2>
-
   <!-- Loading -->
   @if (issueResource.isLoading()) {
-    <p>Loading...</p>
+    <p class="workpulse-loading">Laden…</p>
   }
 
   <!-- Error -->
   @if (issueResource.error(); as error) {
-    <p class="workpulse-error">Error: {{ error }}</p>
+    <p class="workpulse-error">Fehler: {{ error }}</p>
+  }
+
+  <!-- Session-Hinweis -->
+  @if (isFromSession() && issueResource.value()) {
+    <div>
+      Dieses Issue wird in der Session verfolgt
+      <span>{{ elapsed.value() }}</span>
+    </div>
   }
 
   <!-- Details -->
   @if (issueResource.value(); as issue) {
     <!-- Header: Issue-Key + Summary -->
-    <div class="workpulse-issue-header">
-      <div class="workpulse-issue-meta">
-        <span class="workpulse-issue-key">{{ issue.key }}</span>
-        <span class="workpulse-issue-type">{{ issue.issueType }}</span>
-      </div>
-      <h2 class="workpulse-issue-summary">{{ issue.summary }}</h2>
+    <div class="d-flex gap-3 mb-3">
+      <span class="workpulse-issue-key">{{ issue.key }}</span>
+      <span class="workpulse-issue-type">{{ issue.issueType }}</span>
     </div>
+    <h2 class="workpulse-issue-summary">{{ issue.summary }}</h2>
 
     <!-- Status & Priority -->
-    <div class="workpulse-issue-row">
-      <div>
-        <span class="workpulse-label">Status:</span>
-        <span>{{ issue.status }}</span>
-      </div>
-      <div>
-        <span class="workpulse-label">Kategorie:</span>
-        <span>{{ issue.statusCategory }}</span>
-      </div>
+    <dl class="workpulse-issue-row">
+      <dt><span class="workpulse-label">Status</span></dt>
+      <dd>{{ issue.status }}</dd>
+      <dt><span class="workpulse-label">Kategorie</span></dt>
+      <dd>{{ issue.statusCategory }}</dd>
       @if (issue.priority) {
-        <div>
-          <span class="workpulse-label">Priorität:</span>
-          <span>{{ issue.priority }}</span>
-        </div>
+        <dt><span class="workpulse-label">Priorität</span></dt>
+        <dd>{{ issue.priority }}</dd>
       }
-    </div>
-
-    <!-- Assignee & Due Date -->
-    <div class="workpulse-issue-row">
       @if (issue.assignee) {
-        <div>
-          <span class="workpulse-label">Zugewiesen:</span>
-          <span>{{ issue.assignee }}</span>
-        </div>
+        <dt><span class="workpulse-label">Zugewiesen</span></dt>
+        <dd>{{ issue.assignee }}</dd>
       }
       @if (issue.dueDate) {
-        <div>
-          <span class="workpulse-label">Fällig:</span>
-          <span>{{ issue.dueDate }}</span>
-        </div>
+        <dt><span class="workpulse-label">Fällig</span></dt>
+        <dd>{{ issue.dueDate }}</dd>
       }
-    </div>
-
-    <!-- Time Tracking -->
-    <div class="workpulse-issue-row">
-      <div>
-        <span class="workpulse-label">Zeit belegt:</span>
-        <span>{{ issue.timeSpentSeconds }}s</span>
-      </div>
-      <div>
-        <span class="workpulse-label">Restzeit:</span>
-        <span>{{ issue.remainingTimeSeconds }}s</span>
-      </div>
-    </div>
+      <dt><span class="workpulse-label">Zeit belegt</span></dt>
+      <dd>{{ issue.timeSpentSeconds }}s</dd>
+      <dt><span class="workpulse-label">Restzeit</span></dt>
+      <dd>{{ issue.remainingTimeSeconds }}s</dd>
+    </dl>
 
     <!-- Description -->
     @if (issue.description) {
@@ -79,10 +61,10 @@
     <!-- Jira Link -->
     @if (issue.jiraUrl) {
       <div>
-        <a [href]="issue.jiraUrl" target="_blank" rel="noopener noreferrer">
-          In Jira öffnen
-        </a>
+        <a [href]="issue.jiraUrl" target="_blank" rel="noopener noreferrer"> In Jira öffnen </a>
       </div>
     }
+  } @else {
+    <p>Es konnte kein Issue gefunden werden.</p>
   }
 </div>

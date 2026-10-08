@@ -1,10 +1,10 @@
-@if (sessionKey(); as key) {
+@if (activeSession(); as activeSession) {
   <dl class="active-session">
     <dt>Issue:</dt>
-    <dd class="issue-key">{{ key }}</dd>
+    <dd class="issue-key">{{ activeSession.issueKey }}</dd>
 
     <dt>Start:</dt>
-    <dd class="start-time">{{ startAt() | date: 'HH:mm' }}</dd>
+    <dd class="start-time">{{ activeSession.startAt| date: 'HH:mm' }}</dd>
 
     <dt>Dauer:</dt>
     <dd class="elapsed">{{ elapsed.value() }}</dd>

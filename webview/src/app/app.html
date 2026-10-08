@@ -2,5 +2,5 @@
   <workpulse-header-toolbar></workpulse-header-toolbar>
 </header>
 <main class="workpulse-body">
-  <ng-container [cdkPortalOutlet]="portalRouterService.activeView.value()"></ng-container>
+  <ng-container [cdkPortalOutlet]="portalRouterService.activeView.value()" (attached)="onPortalAttached($event)"></ng-container>
 </main>

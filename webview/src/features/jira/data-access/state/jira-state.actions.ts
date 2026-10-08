@@ -2,6 +2,8 @@ import type { IssueListItem } from "@workpulse/api";
 
 export class FetchTasks {
   static readonly type = '[Jira] fetch current tasks';
+
+  constructor(public readonly force = false ){}
 }
 
 export class FetchCurrentFocusedTask {

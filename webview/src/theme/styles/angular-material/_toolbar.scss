@@ -1,4 +1,8 @@
+@use '../functions/rem-calc' as *;
+
 .mat-toolbar {
   --mat-toolbar-container-text-color: var(--vscode-foreground);
-  --mat-toolbar-standard-height: 44px;
+  --mat-toolbar-standard-height: rem-calc(44px);
+
+  padding: 4px !important;
 }

@@ -8,14 +8,24 @@
   <p class="workpulse-error">Fehler: {{ resource.error() }}</p>
 }
 
+<div class="d-flex gap-1">
+  <mat-form-field class="flex-grow">
+    <input matInput [(ngModel)]="suche" />
+    <mat-icon matSuffix class="workpulse-icon-search"></mat-icon>
+  </mat-form-field>
+
+  <button matMiniFab class="ms-auto border rounded" (click)="issueService.reload()">
+    <mat-icon class="workpulse-icon-refresh"></mat-icon>
+  </button>
+</div>
+
 @if (resource.hasValue()) {
-  <table cdk-table [dataSource]="resource.value().data" [trackBy]="trackByIssueKey">
+  <table cdk-table [dataSource]="issueService.data()" [trackBy]="trackByIssueKey">
     <!-- Key -->
     <ng-container cdkColumnDef="key">
       <th cdk-header-cell *cdkHeaderCellDef></th>
       <td cdk-cell *cdkCellDef="let issue">
         <div class="d-flex">
-
           <!-- TODO wir sollten dafuer ein Enum generieren wenn noch keines existiert -->
           <mat-icon
             [class]="{
@@ -43,9 +53,7 @@
     <!-- Summary -->
     <ng-container cdkColumnDef="summary">
       <th cdk-header-cell *cdkHeaderCellDef>Summary</th>
-      <td cdk-cell *cdkCellDef="let issue">
-        [{{ issue.key}}] - {{ issue.summary }}
-      </td>
+      <td cdk-cell *cdkCellDef="let issue">[{{ issue.key }}] - {{ issue.summary }}</td>
     </ng-container>
 
     <!-- Status -->
@@ -65,17 +73,13 @@
     <ng-container cdkColumnDef="actions">
       <th cdk-header-cell *cdkHeaderCellDef></th>
       <td cdk-cell *cdkCellDef="let issue">
-        <div class="btn-group">
-          <button mat-icon-button (click)="startSession(issue)">
+        <div class="d-flex gap-1">
+          <button mat-icon-button (click)="startSession($event, issue)">
             <mat-icon class="workpulse-icon-start"></mat-icon>
           </button>
 
-          <button mat-icon-button (click)="stopSession()">
+          <button mat-icon-button (click)="stopSession($event)">
             <mat-icon class="workpulse-icon-stop"></mat-icon>
-          </button>
-
-          <button mat-icon-button>
-            <mat-icon class="workpulse-icon-preview"></mat-icon>
           </button>
         </div>
       </td>
@@ -85,6 +89,6 @@
     <tr cdk-header-row *cdkHeaderRowDef="displayedColumns"></tr>
 
     <!-- Data Rows -->
-    <tr cdk-row *cdkRowDef="let row; columns: displayedColumns"></tr>
+    <tr cdk-row *cdkRowDef="let row; columns: displayedColumns" (click)="gotoDetails(row.key)"></tr>
   </table>
 }
