@@ -1,6 +1,6 @@
 import { Component, inject, signal, ViewEncapsulation } from '@angular/core';
 import { MatAutocomplete, MatAutocompleteSelectedEvent, MatAutocompleteTrigger, MatOption } from '@angular/material/autocomplete';
-import { JIRA_FLOW_WIDGET, type JiraFlowWidget } from '@jira-flow/common';
+import { WORKPULSE_WIDGET, type WorkpulseWidget} from '@workpulse/common';
 import { IssueSelectorService } from '../service/issue-selector.service';
 import type { IssueListItem } from '@workpulse/api';
 import { PortalRouterService } from '@workpulse/core/portal-router';
@@ -13,12 +13,12 @@ import { PortalRouterService } from '@workpulse/core/portal-router';
   styleUrl: './issue-selector-widget.component.scss',
   providers: [
     {
-      provide: JIRA_FLOW_WIDGET,
+      provide: WORKPULSE_WIDGET,
       useExisting: IssueSelectorWidget,
     },
   ],
 })
-export class IssueSelectorWidget implements JiraFlowWidget {
+export class IssueSelectorWidget implements WorkpulseWidget{
 
   private readonly routerService = inject(PortalRouterService)
 
@@ -38,9 +38,5 @@ export class IssueSelectorWidget implements JiraFlowWidget {
 
   protected openDetails(key: IssueListItem['key']) {
     this.routerService.navigate('jira:issue-detail', { key });
-  }
-
-  refresh(): void {
-    // noop
   }
 }

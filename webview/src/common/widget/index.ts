@@ -1,3 +1,3 @@
 export * from './src/components/widget.component';
 export * from './src/static/tokens';
-export * from './src/interfaces/jira-flow-widget';
+export * from './src/interfaces/workpulse-widget';

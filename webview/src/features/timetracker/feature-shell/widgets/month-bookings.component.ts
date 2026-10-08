@@ -8,8 +8,12 @@ import {
   signal,
   ViewChild,
 } from '@angular/core';
-import { JIRA_FLOW_WIDGET, type JiraFlowWidget } from '@jira-flow/common';
 import { Store } from '@ngxs/store';
+import {
+  WORKPULSE_WIDGET,
+  type WorkpulseWidget,
+  type WorkpulseWidgetAction,
+} from '@workpulse/common';
 import { ChartConfiguration, ChartType } from 'chart.js';
 import { differenceInSeconds, format, getDaysInMonth } from 'date-fns';
 import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2-charts';
@@ -22,20 +26,33 @@ import { FetchMonth, TimetrackerStateSelectors } from '../../data-access';
   providers: [
     provideCharts(withDefaultRegisterables()),
     {
-      provide: JIRA_FLOW_WIDGET,
+      provide: WORKPULSE_WIDGET,
       useExisting: MonthBookingsComponent,
     },
   ],
   templateUrl: './month-bookings.component.html',
 })
-export class MonthBookingsComponent implements JiraFlowWidget {
+export class MonthBookingsComponent implements WorkpulseWidget {
   private readonly store = inject(Store);
   private readonly monthlyData = this.store.selectSignal(TimetrackerStateSelectors.monthData);
   private readonly currentDate = signal(new Date());
 
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
+  readonly actions: WorkpulseWidgetAction[] = [
+    {
+      key: '[Bookings]: reload',
+      icon: 'workpulse-icon-refresh',
+    },
+  ];
+
   readonly title = 'Erfasste Zeiten';
+
+  actionDispatched({ key }: WorkpulseWidgetAction): void {
+    if (key === '[Bookings]: reload') {
+      this.fetchMonthData();
+    }
+  }
 
   protected readonly currentMonthLabel = computed(() => {
     return format(this.currentDate(), 'MMMM yyyy');
@@ -45,7 +62,7 @@ export class MonthBookingsComponent implements JiraFlowWidget {
 
   constructor() {
     afterNextRender({
-      read: () => this.refresh(),
+      read: () => this.fetchMonthData(),
     });
 
     effect(() => {
@@ -160,7 +177,7 @@ export class MonthBookingsComponent implements JiraFlowWidget {
     },
   };
 
-  refresh(): void {
+  private fetchMonthData(): void {
     const month = format(this.currentDate(), 'yyyy-MM');
     this.store.dispatch(new FetchMonth({ month }));
   }

@@ -1,14 +1,17 @@
 <div class="workpulse-widget-header">
   <div class="title">{{ title() }}</div>
-  <div class="toolbar">
-    <ng-content select="[toolbar]"></ng-content>
-  </div>
+
+  @if (actions(); as actions) {
+    <div class="btn-group ms-auto">
+      @for (action of actions; track action.key) {
+        <button mat-icon-button>
+          <mat-icon [class]="action.icon" (click)="dispatchAction(action)"></mat-icon>
+        </button>
+      }
+    </div>
+  }
 </div>
 
 <div class="workpulse-widget-body">
   <ng-content></ng-content>
-</div>
-
-<div class="workpulse-widget-footer">
-  <button class="workpulse-btn" role="button" (click)="reloadWidget()">Reload</button>
 </div>

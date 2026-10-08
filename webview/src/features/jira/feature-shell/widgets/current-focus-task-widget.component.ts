@@ -1,13 +1,12 @@
-import { Component, computed, inject, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { Component, computed, inject } from '@angular/core';
 import {
-  workpulseTeaserComponent,
-  JIRA_FLOW_WIDGET,
   SafeHtmlPipe,
-  type JiraFlowWidget,
-} from '@jira-flow/common';
+  WORKPULSE_WIDGET,
+  workpulseTeaserComponent,
+  type WorkpulseWidget,
+} from '@workpulse/common';
 import { Store } from '@ngxs/store';
-import { FetchCurrentFocusedTask, FetchTasks, JiraStateSelectors } from '../../data-access';
+import { JiraStateSelectors } from '../../data-access';
 
 @Component({
   selector: 'jiraflow-current-focus-task',
@@ -15,13 +14,13 @@ import { FetchCurrentFocusedTask, FetchTasks, JiraStateSelectors } from '../../d
   imports: [SafeHtmlPipe, workpulseTeaserComponent],
   providers: [
     {
-      provide: JIRA_FLOW_WIDGET,
+      provide: WORKPULSE_WIDGET,
       useExisting: CurrentFocusTaskWidgetComponent,
     },
   ],
   exportAs: 'currentFocusTask',
 })
-export class CurrentFocusTaskWidgetComponent implements JiraFlowWidget {
+export class CurrentFocusTaskWidgetComponent implements WorkpulseWidget {
   private readonly store = inject(Store);
 
   protected readonly focusedTask = this.store.selectSignal(JiraStateSelectors.currentFocusedTask);
@@ -30,9 +29,5 @@ export class CurrentFocusTaskWidgetComponent implements JiraFlowWidget {
 
   readonly taskKey = computed(() => {
     return this.focusedTask()?.key ?? null;
-  })
-
-  refresh(): void {
-    this.store.dispatch(new FetchCurrentFocusedTask());
-  }
+  });
 }

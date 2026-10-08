@@ -1,5 +1,5 @@
 import { computed, inject, Service, signal } from '@angular/core';
-import { JiraStateSelectors, SelectIssue } from '@jira-flow/jira/data-access';
+import { JiraStateSelectors, SelectIssue } from '@workpulse/jira/data-access';
 import { Store } from '@ngxs/store';
 import { IssueListItem } from '@workpulse/api';
 import { SessionStateSelectors, StartSession } from '@workpulse/core/state';

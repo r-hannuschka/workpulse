@@ -72,7 +72,7 @@ flowchart TB
 | `@timetracker/api` | `@timetracker/api` (gleicher Pfad!) |
 | `@core/command` | — |
 | `@module/webview` | — |
-| — | `@jira-flow/*` (Alias für `src/features/*/`) |
+| — | `@workpulse/*` (Alias für `src/features/*/`) |
 | — | `@features/*/` (relativ, kein Alias) |
 
 ---

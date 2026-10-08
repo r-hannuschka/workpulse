@@ -1,10 +1,10 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { ActiveSessionWidgetComponent, TimerButtonsComponent, WidgetComponent } from '@jira-flow/common';
+import { ActiveSessionWidgetComponent, TimerButtonsComponent, WidgetComponent } from '@workpulse/common';
 import {
   CurrentFocusTaskWidgetComponent,
   IssueSelectorWidget,
-} from '@jira-flow/jira/feature-shell';
-import { MonthBookingsComponent } from '@jira-flow/timetracker/feature-shell';
+} from '@workpulse/jira/feature-shell';
+import { MonthBookingsComponent } from '@workpulse/timetracker/feature-shell';
 
 @Component({
   selector: 'workpulse-dashboard',
