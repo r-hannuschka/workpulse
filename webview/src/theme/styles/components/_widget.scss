@@ -7,12 +7,17 @@
 
   &-header {
     background-color: var(--vscode-activityBar-activeBackground, rgba(0, 0, 0, 0.15));
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 2px .5rem 1rem;
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
     height: rem-calc(40px);
+
+    .mat-mdc-button-base {
+      height: auto !important;
+      border-radius: rem-calc(4px) !important;
+    }
   }
 
   &-body {

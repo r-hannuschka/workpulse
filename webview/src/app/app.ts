@@ -1,4 +1,4 @@
-import { CdkPortalOutlet } from '@angular/cdk/portal';
+import { CdkPortalOutlet, CdkPortalOutletAttachedRef } from '@angular/cdk/portal';
 import { Component, inject } from '@angular/core';
 import { PortalRouterService } from '@workpulse/core/portal-router';
 import { ToolbarComponent } from './components/toolbar.component';
@@ -12,5 +12,16 @@ import { ToolbarComponent } from './components/toolbar.component';
   }
 })
 export class App {
+
+  private attachedPortal: CdkPortalOutletAttachedRef | null = null;
+
   protected readonly portalRouterService = inject(PortalRouterService);
+
+  protected onPortalAttached(portalRef: CdkPortalOutletAttachedRef) {
+    if (this.attachedPortal) {
+      this.attachedPortal.destroy();
+      this.attachedPortal = null
+    }
+    this.attachedPortal = portalRef;
+  }
 }

@@ -1,6 +1,11 @@
 @use 'cdk-table-columns' as *;
+@use 'rem-calc' as *;
 
 jira-issues-list {
+
+  display: block;
+  width: 100%;
+
   h3 {
     margin: 0 0 1rem;
     font-size: 1.25rem;
@@ -12,7 +17,16 @@ jira-issues-list {
     @include cdk-table-columns(
       (
         key: (
-          width: 40px,
+          width: rem-calc(100px),
+        ),
+        summary: (
+          width: auto,
+        ),
+        priority: (
+          width: rem-calc(130px),
+        ),
+        actions: (
+          width: rem-calc(80px),
         ),
       )
     );

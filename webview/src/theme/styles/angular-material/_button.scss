@@ -6,3 +6,12 @@
   --mat-button-text-pressed-state-layer-opacity: var(--mat-button-text-hover-state-layer-opacity);
   --mat-button-text-touch-target-size: 38px;
 }
+
+.mat-mdc-icon-button {
+  display: inline-flex !important;
+}
+
+.mat-mdc-mini-fab {
+  --mat-fab-small-container-color: var(--vscode-button-background);
+  --mat-fab-small-foreground-color: var(--vscode-button-foreground);
+}

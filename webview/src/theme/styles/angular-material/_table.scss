@@ -1,0 +1,71 @@
+@use '../functions/rem-calc' as *;
+
+table[cdk-table] {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--vscode-foreground, #cccccc);
+  background-color: var(--vscode-editor-background);
+
+  // --- HEADER SEKTION (Verhält sich wie die VS Code List-Header) ---
+  .cdk-header-row {
+    background-color: var(--vscode-sideBar-background, #252526);
+    position: sticky;
+    top: -7px;
+    padding-top: 7px;
+    z-index: 10;
+
+    // Ganz feine native Trennlinie unter dem Header
+    border-bottom: 1px solid var(--vscode-panel-border, #3c3c3c);
+  }
+
+  .cdk-header-cell {
+    padding: 8px 12px;
+    color: var(--vscode-descriptionForeground, #8c8c8c);
+    font-weight: normal; // VS Code nutzt selten fette Header
+    text-align: left;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  // --- ROWS (Nachbau der nativen VS Code Listen-Elemente) ---
+  .cdk-row {
+    // Keine horizontalen Linien zwischen den Zeilen (wie im File-Tree)
+    border-bottom: 1px solid transparent;
+    transition: background-color 0.05s ease;
+    cursor: pointer;
+
+    // Hover-Effekt exakt wie bei Dateien im Explorer
+    &:hover {
+      background-color: var(--vscode-list-hoverBackground, #2a2d2e);
+      color: var(--vscode-list-hoverForeground, #ffffff);
+    }
+
+    // Aktive Selektion (Fokuszustand der IDE)
+    &.is-selected {
+      background-color: var(--vscode-list-activeSelectionBackground, #37373d);
+      color: var(--vscode-list-activeSelectionForeground, #ffffff) !important;
+      outline: 1px dashed var(--vscode-list-focusOutline, transparent);
+
+      // Subtexte in selektierten Zeilen lesbar halten
+      .muted-text {
+        color: var(--vscode-list-activeSelectionForeground);
+        opacity: 0.7;
+      }
+    }
+  }
+
+  // --- ZELLEN ---
+  .cdk-cell {
+    padding: 6px 12px; // Kompaktes VS Code Raster
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // --- BUTTONS ---
+  .mat-mdc-icon-button {
+    --mat-icon-button-touch-target-size: #{rem-calc(35px)};
+    --mat-icon-button-state-layer-size: #{rem-calc(30px)};
+  }
+}

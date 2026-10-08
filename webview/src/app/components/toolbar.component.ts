@@ -25,6 +25,7 @@ export class ToolbarComponent {
   readonly navItems = [
     { path: 'dashboard', label: 'Workpulse' },
     { path: 'jira:issue-list', label: 'Aufgabenliste' },
+    { path: 'jira:issue-detail', label: 'Issue Details' }
   ];
 
   navigate(path: string): void {

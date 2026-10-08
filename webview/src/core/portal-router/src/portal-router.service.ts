@@ -1,5 +1,13 @@
 import { ComponentPortal } from '@angular/cdk/portal';
-import { inject, Injector, resource, Service, signal } from '@angular/core';
+import {
+  createEnvironmentInjector,
+  EnvironmentInjector,
+  inject,
+  Injector,
+  resource,
+  Service,
+  signal,
+} from '@angular/core';
 import { RouteParams, Routes } from './route';
 
 @Service()
@@ -8,6 +16,7 @@ export class PortalRouterService {
   private readonly injector = inject(Injector);
 
   private readonly routeConfig = inject(Routes);
+  private currentChildInjector: EnvironmentInjector | null = null;
 
   navigate<TParams extends RouteParams>(path: string, params?: TParams): void {
     this.activeRoute.set({
@@ -23,7 +32,19 @@ export class PortalRouterService {
 
       const matchedRoute = this.routeConfig.find(({ path }) => path === route?.path);
       if (matchedRoute) {
-        return new ComponentPortal(await matchedRoute.component(), null, this.createInjector(route?.params));
+        if (this.currentChildInjector) {
+          this.currentChildInjector.destroy();
+          this.currentChildInjector = null;
+        }
+
+        const newInjector = this.createInjector(route?.params);
+        this.currentChildInjector = newInjector;
+
+        return new ComponentPortal(
+          await matchedRoute.component(),
+          null,
+          newInjector
+        );
       }
 
       const routeEntry = this.routeConfig.find((routeEntry) => routeEntry.default === true);
@@ -40,18 +61,15 @@ export class PortalRouterService {
   }
 
   private createInjector(params?: RouteParams) {
-    if (!params) {
-      return this.injector;
-    }
-
-    return Injector.create({
-      providers: [
+    const envInjector = this.injector.get(EnvironmentInjector);
+    return createEnvironmentInjector(
+      [
         {
           provide: RouteParams,
-          useValue: params,
+          useValue: params ?? {},
         },
       ],
-      parent: this.injector,
-    });
+      envInjector,
+    );
   }
 }
