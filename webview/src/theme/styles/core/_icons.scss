@@ -100,3 +100,9 @@
     content: $workpulse-icon-speed;     
   }
 }
+
+.workpulse-icon-refresh {
+  &:before {
+    content: $workpulse-icon-refresh;     
+  }
+}

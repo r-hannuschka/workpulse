@@ -1,6 +1,8 @@
-# Widget System
+# Widget-System
 
-Das Widget-System bietet ein wiederverwendbares Layout für alle Widgets im Webview.
+Das Widget-System bietet ein wiederverwendbares Layout-Chrome (Header, Optionale
+Action-Icons) für Feature-Widgets. Das Feature-Widget liefert Content, der
+Widget-Host liefert das统一的 Layout.
 
 ---
 
@@ -8,159 +10,167 @@ Das Widget-System bietet ein wiederverwendbares Layout für alle Widgets im Webv
 
 ```mermaid
 flowchart TD
-    subgraph Shell["WidgetComponent (Shell)"]
-        H["Header"]
-        B["Body (ng-content)"]
-        F["Footer (Reload Button)"]
+    Host["WidgetComponent\n<workpulse-widget>"]
+
+    subgraph HostInner["Host-Shell"]
+        Header["Header: Titel + Action-Icons"]
+        Body["Body: ng-content"]
     end
 
-    Shell -.->|contentChild| Token["JIRA_FLOW_WIDGET<br/>InjectionToken"]
-
-    subgraph Contract["JiraFlowWidget<br/>Interface"]
-        T["title: Signal&lt;string&gt;"]
-        R["refresh(): void"]
+    subgraph Contract["WorkpulseWidget-Interface"]
+        C1["title: string"]
+        C2["actions?: WorkpulseWidgetAction[]"]
+        C3["actionDispatched?\n(action): void"]
     end
 
-    WidgetImpl["MeinWidget"] -->|implements| Contract
-    WidgetImpl -->|self-provide| Token
-    Token -.->|lookup| Contract
+    subgraph Token["WORKPULSE_WIDGET\nInjectionToken"]
+    end
+
+    Widget["Feature-Widget\n(z.B. ActiveSession)"] -->|implements| Contract
+    Widget -->|self-provide| Token
+    Host -->|contentChild| Token
+    Token -.->|bind| Contract
+    Host -->|render| Body
 ```
+
+**Prinzip:** Der Host kennt kein konkretes Feature-Widget. Er liest über den
+`WORKPULSE_WIDGET`-Token die Metadaten (Titel, Actions) und rendert generisches
+Layout. Der Content landet über `<ng-content>` im Body.
 
 ---
 
-## Kontrakt: JiraFlowWidget
+## Kontrakt: WorkpulseWidget
 
-Jedes Widget, das in einem `WidgetComponent` gerendert wird, muss `JiraFlowWidget` implementieren:
+Jedes Widget-Feature muss diese Schnittstelle implementieren:
 
 ```typescript
-import type { Signal } from "@angular/core";
-
-export interface JiraFlowWidget {
-  readonly title: Signal<string>;
-  refresh(): void;
+export interface WorkpulseWidget {
+  readonly title: string;
+  readonly actions?: WorkpulseWidgetAction[];
+  actionDispatched?(action: WorkpulseWidgetAction): void;
 }
 ```
 
-**Contract:**
+- **`title`** — statische Zeichenkette, angezeigt im Header
+- **`actions`** — optionale Toolbar-Aktionen, gerendert als Icon-Buttons
+- **`actionDispatched`** — optionaler Callback bei Icon-Button-Klick
 
-- **`title`** — Signal mit dem Anzeigetitel im Widget-Header
-- **`refresh()`** — Wird vom Reload-Button im Footer aufgerufen
+Eine Action ist typisiert über:
+
+```typescript
+export interface WorkpulseWidgetAction<TAction = string> {
+  readonly key: string;
+  readonly icon: string;
+  readonly action: TAction;
+}
+```
 
 ---
 
-## WidgetComponent (Shell)
+## WidgetComponent (Host-Shell)
 
 ```typescript
 @Component({
-  selector: 'jiraflow-widget',
-  template: `
-    <div class="jf-widget-header">{{ title() }}</div>
-    <div class="jf-widget-body">
-      <ng-content></ng-content>
-    </div>
-    <div class="jf-widget-footer">
-      <button class="jf-btn" role="button">Reload</button>
-    </div>
-  `,
+  selector: 'workpulse-widget',
+  templateUrl: './widget.component.html',
+  encapsulation: ViewEncapsulation.None,
+  imports: [MatIconButton, MatIcon],
+  host: { class: 'workpulse-widget' },
 })
 export class WidgetComponent {
-  private readonly widget = contentChild(JIRA_FLOW_WIDGET);
+  private readonly widget = contentChild(WORKPULSE_WIDGET);
 
   protected readonly title = computed(() => {
-    const loadedWidget = this.widget();
-    return loadedWidget?.title() ?? 'Loading ...';
+    const w = this.widget();
+    return w?.title ?? 'Loading ...';
   });
-}
-```
 
-**Verwendung:**
+  protected readonly actions = computed(() => {
+    const { actions } = this.widget() ?? {};
+    return Array.isArray(actions) && actions.length > 0 ? actions : [];
+  });
 
-```html
-<jiraflow-widget>
-  <jiraflow-current-focus-task></jiraflow-current-focus-task>
-</jiraflow-widget>
-```
-
----
-
-## Token: JIRA_FLOW_WIDGET
-
-```typescript
-import { InjectionToken } from '@angular/core';
-import type { JiraFlowWidget } from '../interfaces/jira-flow-widget';
-
-export const JIRA_FLOW_WIDGET = new InjectionToken<JiraFlowWidget>(
-  'Widget welches angezeigt wird'
-);
-```
-
----
-
-## Neues Widget erstellen
-
-### Schritt 1: Interface + self-provide
-
-Das Widget implementiert das Interface und registriert sich selbst als Provider:
-
-```typescript
-import type { JiraFlowWidget } from '@jira-flow/widget';
-import { Component, signal } from '@angular/core';
-
-@Component({
-  selector: 'timetracker-timer-widget',
-  templateUrl: './timer-widget.component.html',
-  styleUrl: './timer-widget.component.css',
-  providers: [
-    {
-      provide: JIRA_FLOW_WIDGET,
-      useExisting: TimerWidgetComponent,
-    },
-  ],
-})
-export class TimerWidgetComponent implements JiraFlowWidget {
-  readonly title = signal('Time Tracker');
-
-  refresh(): void {
-    // ...
+  protected dispatchAction(action: WorkpulseWidgetAction<string>) {
+    const w = this.widget();
+    if (w && w.actionDispatched) {
+      w.actionDispatched(action);
+    }
   }
 }
 ```
 
-**Warum self-provide?** `contentChild(JIRA_FLOW_WIDGET)` sucht im Child-Komponentenbaum nach einem Provider mit diesem Token. Das Widget registriert sich selbst als seine Interface-Implementierung.
+Der Host tut drei Dinge:
+
+1. **Widget lesen** — `contentChild(WORKPULSE_WIDGET)` holt das eingebettete
+   Feature-Widget
+2. **Metadaten extrahieren** — `title` und `actions` als Signal-Properties
+3. **Actions delegieren** — Klicks auf Icon-Buttons gehen zurück an das
+   Feature-Widget via `actionDispatched`
+
+---
+
+## Self-Provide Pattern
+
+```typescript
+@Component({
+  selector: 'jiraflow-active-session',
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    { provide: WORKPULSE_WIDGET, useExisting: ActiveSessionComponent },
+  ],
+})
+export class ActiveSessionComponent implements WorkpulseWidget {
+  readonly title = 'Aktive Session';
+
+  readonly actions: WorkpulseWidgetAction[] = [
+    { key: 'stop', icon: 'stop_circle', action: 'stop-session' },
+  ];
+
+  actionDispatched(action: WorkpulseWidgetAction): void {
+    if (action.action === 'stop-session') {
+      this.stopSession();
+    }
+  }
+}
+```
+
+**Warum self-provide?** `contentChild(WORKPULSE_WIDGET)` sucht nach einem
+Provider mit diesem Token im Child-Baum. Das Widget stellt sich selbst als
+Implementierung seiner eigenen Schnittstelle bereit — Typsicherheit ohne
+zusätzliche Abhängigkeit des Hosts auf das Feature-Widget.
+
+---
+
+## Widget erstellen
+
+Ein Widget besteht aus zwei Schritten:
+
+### Schritt 1: Component mit Interface + Provider
+
+```typescript
+@Component({
+  selector: 'jiraflow-issue-selector',
+  templateUrl: './issue-selector.component.html',
+  encapsulation: ViewEncapsulation.None,
+  providers: [
+    { provide: WORKPULSE_WIDGET, useExisting: IssueSelectorComponent },
+  ],
+})
+export class IssueSelectorComponent implements WorkpulseWidget {
+  readonly title = 'Issue suchen';
+}
+```
+
+Fertig. Die zwei verpflichtenden Zutaten sind:
+1. `implements WorkpulseWidget` mit mindestens `title`
+2. `providers` mit dem Self-Provide-Eintrag
 
 ### Schritt 2: Exportieren
 
 ```typescript
-// features/timetracker/index.ts
-export * from './components/timer-widget.component';
+// im Feature-Module oder barrel export
+export * from './issue-selector.component';
 ```
 
-### Schritt 3: Im Dashboard einbinden
-
-```typescript
-import { WidgetComponent } from '@jira-flow/widget';
-import { CurrentFocusTaskWidgetComponent } from '@jira-flow/jira';
-import { TimerWidgetComponent } from '../features/timetracker';
-
-@Component({
-  imports: [WidgetComponent, CurrentFocusTaskWidgetComponent, TimerWidgetComponent],
-  template: `
-    <jiraflow-widget>
-      <jiraflow-current-focus-task></jiraflow-current-focus-task>
-    </jiraflow-widget>
-    <timetracker-timer-widget></timetracker-timer-widget>
-  `,
-})
-export class DashboardComponent {}
-```
-
----
-
-## Zusammenfassung
-
-| Datei | Rolle |
-|-------|-------|
-| `widget.component.ts` | Layout-Shell mit Header/Body/Footer |
-| `widget.component.html` | HTML-Template mit ng-content |
-| `jira-flow-widget.ts` | Interface-Contract (`title`, `refresh`) |
-| `tokens.ts` | InjectionToken für contentChild |
+Mehr gibt's nicht. Kein Registry-Eintrag, keine Konfigurationsdatei, kein
+Factory-Pattern.

@@ -126,12 +126,12 @@ export const routerConfig: PortalRoute[] = [
   },
   {
     path: 'jiraIssuesList',
-    component: () => import('@jira-flow/jira/feature-shell')
+    component: () => import('@workpulse/jira/feature-shell')
       .then(m => m.JiraIssuesListComponent),
   },
   {
     path: 'jiraIssueDetails',
-    component: () => import('@jira-flow/jira/feature-shell')
+    component: () => import('@workpulse/jira/feature-shell')
       .then(m => m.IssueDetailsComponent),
   },
   {

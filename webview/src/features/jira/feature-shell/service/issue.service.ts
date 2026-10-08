@@ -1,6 +1,6 @@
 import { inject, Service } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { JiraStateSelectors } from '@jira-flow/jira/data-access';
+import { JiraStateSelectors } from '@workpulse/jira/data-access';
 import { Store } from '@ngxs/store';
 import type { IssueListItem, JiraIssueDetails } from '@workpulse/api';
 import { JiraFlowFacade } from '@workpulse/core/api';

@@ -1,5 +1,5 @@
 import type { PortalRoute } from '@workpulse/core/portal-router';
-import { routes as jiraRoutes } from '@jira-flow/jira/feature-shell';
+import { routes as jiraRoutes } from '@workpulse/jira/feature-shell';
 
 export const routerConfig: PortalRoute[] = [
   {

@@ -1,6 +1,8 @@
+@use '../functions/rem-calc' as *;
+
 .workpulse-widget {
   border: 1px solid var(--vscode-widget-border);
-  border-radius: 4px;
+  border-radius: rem-calc(4px);
   display: block;
 
   &-header {
@@ -9,6 +11,8 @@
     font-weight: 700;
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    height: rem-calc(40px);
   }
 
   &-body {
