@@ -6,7 +6,7 @@
       (click)="navigate(item.path)"
       [disableRipple]="true"
     >
-      <mat-icon class="workpulse-icon-home"></mat-icon>
+      <mat-icon [class]="item.icon"></mat-icon>
       {{ item.label }}
     </a>
   }
