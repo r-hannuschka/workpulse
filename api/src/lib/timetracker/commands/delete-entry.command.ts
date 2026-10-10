@@ -1,4 +1,8 @@
-import type { Command } from "../../command";
+import type { Command } from "../../core";
 
-export type DeleteEntryPayload = { id: string };
+/** Time-Entry löschen */
+export interface DeleteEntryPayload {
+  id: string;
+}
+
 export type DeleteEntryCommand = Command<"timetracker:delete-entry", DeleteEntryPayload>;

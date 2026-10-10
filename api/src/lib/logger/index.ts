@@ -1,9 +1,4 @@
-export type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+export * from './commands/send-log.command';
 
-export interface LogEntry {
-  timestamp: string;
-  level: LogLevel;
-  message: string;
-}
-
-export * from './commands';
+export * from './types/log-entry';
+export * from './types/log-level';

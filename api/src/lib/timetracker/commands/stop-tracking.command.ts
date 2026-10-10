@@ -1,10 +1,4 @@
-import type { Command } from "../../command";
+import type { Command } from "../../core";
 
-export type StopTrackingPayload = { issueKey: string };
+/** Timer stoppen – kein Payload */
 export type StopTrackingCommand = Command<"timetracker:stop-tracking">;
-
-export type StopTrackingResponse = {
-  duration: number;
-  date: string;
-  id: string;
-};

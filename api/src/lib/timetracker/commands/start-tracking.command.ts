@@ -1,9 +1,8 @@
-import type { Command } from "../../command";
-import type { TimeEntry } from "../types/time-entry";
+import type { Command } from "../../core";
 
-export type StartTrackingPayload = {
+/** Timer starten – Issue-Key des Tickets */
+export interface StartTrackingPayload {
   issueKey: string;
-};
+}
 
 export type StartTrackingCommand = Command<"timetracker:start-tracking", StartTrackingPayload>;
-export type StartTrackingResponse = TimeEntry;
