@@ -29,9 +29,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.workpulse-icon-home {
+.workpulse-icon-query_stats {
   &:before {
-    content: $workpulse-icon-home;
+    content: $workpulse-icon-query_stats;     
+    color: #e8eaed;
   }
 }
 
@@ -83,12 +84,6 @@
   }
 }
 
-.workpulse-icon-timeline {
-  &:before {
-    content: $workpulse-icon-timeline;     
-  }
-}
-
 .workpulse-icon-test {
   &:before {
     content: $workpulse-icon-test;     
@@ -104,5 +99,29 @@
 .workpulse-icon-refresh {
   &:before {
     content: $workpulse-icon-refresh;     
+  }
+}
+
+.workpulse-icon-bookings {
+  &:before {
+    content: $workpulse-icon-bookings;     
+  }
+}
+
+.workpulse-icon-chevron_left {
+  &:before {
+    content: $workpulse-icon-chevron_left;     
+  }
+}
+
+.workpulse-icon-chevron_right {
+  &:before {
+    content: $workpulse-icon-chevron_right;     
+  }
+}
+
+.workpulse-icon-today {
+  &:before {
+    content: $workpulse-icon-today;     
   }
 }

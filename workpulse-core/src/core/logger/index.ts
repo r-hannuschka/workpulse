@@ -1,2 +1,2 @@
-export * from './src/commands/send-log.command';
-export * from './src/provider/logger.service';
+export * from './provider/logger.service';
+export * from './commands/send-log.command';

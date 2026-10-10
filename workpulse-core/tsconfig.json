@@ -19,8 +19,9 @@
     "skipLibCheck": true,
     "types": ["node"],
     "paths": {
-      "@core/*": ["./src/core/*/index.ts"],
-      "@module/*": ["./src/module/*/index.ts"]
+      "@/core/*": ["./src/core/*/index.ts"],
+      "@/domain/*": ["./src/domain/*/index.ts"],
+      "@/modules/*": ["./src/modules/*/index.ts"]
     }
   },
   "include": ["src/**/*"],

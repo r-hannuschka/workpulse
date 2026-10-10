@@ -5,7 +5,7 @@ import commonjs from 'vite-plugin-commonjs';
 export default defineConfig({
   build: {
     lib: {
-      entry: resolve(import.meta.dirname, 'src/workpulse.ts'),
+      entry: resolve(import.meta.dirname, 'src/main.ts'),
       name: '@workpulse',
       formats: ['cjs'],
       fileName: () => 'workpulse.js',
@@ -24,8 +24,9 @@ export default defineConfig({
   plugins: [commonjs()],
   resolve: {
     alias: {
-      '@core': resolve(import.meta.dirname, 'src/core'),
-      '@module': resolve(import.meta.dirname, 'src/module'),
+      '@/core': resolve(import.meta.dirname, 'src/core'),
+      '@/domain': resolve(import.meta.dirname, 'src/domain'),
+      '@/modules': resolve(import.meta.dirname, 'src/modules'),
       '@workpulse': resolve(import.meta.dirname, '../api/src'),
     },
     extensions: ['.ts', '.js'],

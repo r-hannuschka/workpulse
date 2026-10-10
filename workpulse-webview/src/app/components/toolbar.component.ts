@@ -23,9 +23,10 @@ export class ToolbarComponent {
   private readonly router = inject(PortalRouterService);
 
   readonly navItems = [
-    { path: 'dashboard', label: 'Workpulse' },
-    { path: 'jira:issue-list', label: 'Aufgabenliste' },
-    { path: 'jira:issue-detail', label: 'Issue Details' }
+    { path: 'dashboard', label: 'Workpulse', icon: "workpulse-icon-query_stats" },
+    { path: 'timetracker:bookings', label: 'erfasste Zeiten', icon: "workpulse-icon-bookings" },
+    { path: 'jira:issue-list', label: 'Aufgabenliste', icon: "workpulse-icon-task-list" },
+    { path: 'jira:issue-detail', label: 'Issue Details', icon: "workpulse-icon-preview" },
   ];
 
   navigate(path: string): void {
