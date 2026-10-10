@@ -1,50 +1,131 @@
-# Workpulse VSCode Extension
+# Workpulse
 
-Eine VSCode-Extension um Jira-Issues direkt in VSCode anzusehen und die Zeit zu tracken. Statt ständig zwischen Browser und Editor zu wechseln – alles im VSCode Panel.
+> Zeit für Jira-Tasks tracken – direkt aus VS Code, ohne Browser-Wechsel.
 
-## Was kann es?
+---
 
-- Jira-Issues aus deinem Projekt anzeigen
-- Status und verbrauchte Zeit sehen
-- Direkt aus VSCode auf deine Jira-Instanz zugreifen
+## Was ist Workpulse?
 
-## Voraussetzungen
+Workpulse ist eine **VS Code Extension**, mit der du deine Zeit für Jira-Tasks trackst – ohne zum Browser wechseln zu müssen. Du bist im Editor, klickst auf "Workpulse öffnen", siehst deine Tasks, startest den Timer. Fertig.
 
-- VSCode >= 1.105.0
+Es basiert auf einem **extensiblen Plugin-System**: Der Core bringt alles, was jede Extension braucht. Jira ist das erste Plugin – weitere könnten folgen.
+
+## Projekt-Struktur
+
+```
+workpulse/          → VS Code Extension Core (Fundament)
+workpulse-jira/     → Jira-Plugin (registriert sich am Core)
+workpulse-webview/  → Angular Dashboard (wird im VS Code Panel angezeigt)
+workpulse-sdk/      → SDK zum Entwickeln eigener Workpulse-Extensions
+api/                → Shared Types (Commands, DTOs, Mappings)
+```
+
+### workpulse – Der Core
+
+Das Fundament. Bringt das Command-System, das Webview-Panel und die Satellite-Registry. Kann aber **gar nichts ohne Plugins** – die Core-Extension macht erst durch die Satelliten Sinn.
+
+### workpulse-jira – Das Jira-Plugin
+
+Registriert sich als Satellite am Core und bringt die Jira-Integration:
+- Lädt deine offenen Tasks aus Jira
+- Zeigt den Focus-Task (aktiv "In Progress")
+- Issue-Details, Status, verbrauchte Zeit
+- Zeit-Tracking für einzelne Tasks
+
+### workpulse-webview – Das Dashboard
+
+Eine Angular-Applikation, die als Panel in VS Code angezeigt wird. Zeigt Issues, Timer, Timesheet – alles interaktiv.
+
+### workpulse-sdk – Das SDK
+
+Paket zum Entwickeln eigener Workpulse-Extensions. Bringt Command-System und DI-Infrastruktur.
+
+### @workpulse/api – Shared Types
+
+Geteilte Typ-Definitionen zwischen Extension und Webview – keine Laufzeit-Logik, nur Interfaces und Commands.
+
+## Architektur
+
+```mermaid
+graph TD
+    SDK["workpulse-sdk\nCommandController · CommandRegistry\n@RegisterCommand · CommandHandler"]
+    Core["Core\nSatelliteService · WebviewProvider\nSettings · Logger · Notification"]
+    Jira["Jira Plugin\nJiraApiClient · SearchRepository\nCommandHandler"]
+    Wv["Angular Dashboard\nVsCodeBridge · Facades · NGXS Store"]
+
+    SDK -->|"importiert"| Core
+    SDK -->|"importiert"| Jira
+    Wv <-->|"postMessage"| Core
+    Core -.->|"registriert"| Jira
+```
+
+### Command-System
+
+Die gesamte Kommunikation zwischen Webview und Core läuft über typsichere Commands. CommandController, Registry und Decorator kommen aus **workpulse-sdk** und werden von Core sowie Satellite importiert.
+
+```mermaid
+sequenceDiagram
+    participant W as Webview
+    participant C as CommandController
+    participant S as Satellite
+
+    W->>C: CommandContainer {type, payload}
+    C->>C: Dedup (SHA256 Hash)
+    C->>C: Timeout (30s)
+    C->>S: Handler Lookup
+    S-->>C: Response {code, data}
+    C-->>W: CommandResponse {id, code, data}
+```
+
+Satellite-Plugins registrieren sich via `@RegisterCommand`-Decorator und sind sofort verfügbar.
+
+### Satellite-System
+
+Jira hängt sich als Satellite am Core heran. Das Plugin-System (`SatelliteService`) erlaubt es, beliebige Module zu registrieren – ohne den Core anzufassen. Designed für Erweiterungen wie Confluence, GitHub oder CI-Pipelines.
+
+```mermaid
+flowchart TD
+    Core["Core\nSatelliteService"]
+    Jira["workpulse-jira\nJiraApiClient + Commands"]
+    Future["Zukünftige Module\nConfluence? GitHub? CI?"]
+
+    Core -->|"registerSatellite()"| Jira
+    Core -->|"registerSatellite()"| Future
+```
+
+## Installation & Setup
+
+### Voraussetzungen
+
+- VS Code >= 1.105.0
 - Node.js >= 18
 - Jira-Instanz mit API-Zugang
 
-## Installation
-
-### 1. Code clonen und Dependencies installieren
+### 1. Dependencies installieren
 
 ```bash
-git clone <repo-url>
-cd workpulse
 npm install
 ```
 
 ### 2. Bauen
 
 ```bash
-npm run extension:build && npm run webview:build
+npm run build
+# Baut: SDK → API → Webview → Extensions
 ```
 
-### 3. In VSCode starten
+### 3. In VS Code starten
 
-Im Extension-Ordner:
 ```bash
 code .
+F5            # Debug-Session startet die Extension
 ```
-
-Dann `F5` drücken um die Extension im Debug-Modus zu starten.
-Die Umgebungsvariablen für Jira werden über `.vscode/launch.json` definiert.
 
 ## Konfiguration
 
 ### Entwicklung
 
-`.vscode/launch.template.json` nach `.vscode/launch.json` kopieren, umbenennen und die Jira-Daten anpassen:
+`.vscode/launch.template.json` nach `.vscode/launch.json` kopieren und die Jira-Daten anpassen:
 
 ```json
 "env": {
@@ -55,42 +136,42 @@ Die Umgebungsvariablen für Jira werden über `.vscode/launch.json` definiert.
 }
 ```
 
-### Produktions-Betrieb
+### Produktion
 
-Für den Produktiveinsatz die Jira-Daten in den VSCode-Einstellungen konfigurieren:
+Die Jira-Daten in den VS Code Einstellungen konfigurieren:
 
 ```
-workpulse.JIRA_API_URL      → https://deine-jira.com
+workpulse.JIRA_API_URL      → https://deine-jira.company.com
 workpulse.JIRA_API_TOKEN    → dein-api-token
 workpulse.JIRA_USER_NAME    → deine-email@example.com
-workpulse.JIRA_PROJECT_KEY  → DEIN_PROJEKTKEY
+workpulse.JIRA_PROJECT_KEY  → PROJEKTKEY
 ```
 
-Optional: Passe die Status- und Issue-Type Mappings (`workpulse.STATUS_MAPPING`, `workpulse.ISSUE_TYPE_MAPPING`) an deine Jira-Konfiguration an.
+Optional: Status- und Issue-Type Mappings anpassen:
+- `workpulse.STATUS_MAPPING` – Jira-Status zu internen Zuständen mappen
+- `workpulse.ISSUE_TYPE_MAPPING` – Jira-Ticket-Typen zu BUG/FEATURE mappen
 
 ## Verwendung
 
-1. Command Palette öffnen: `Ctrl+Shift+P` / `Cmd+Shift+P`
-2. "Workpulse: open webview" suchen und Enter
-3. Dashboard öffnet sich - Issues werden geladen
+1. `Ctrl+Shift+P` / `Cmd+Shift+P`
+2. **"Workpulse: open webview"**
+3. Dashboard öffnet sich – Issues werden geladen, Timer starten
 
-## Build & Watch
+## Entwicklung
+
+### Webview Dev-Server
 
 ```bash
-# Extension im Watch-Mode bauen
-npm run extension:watch
-
-# Oder WebView separat entwickeln
-cd webview
-npm run start
+cd workpulse-webview && npm start
+# Angular HMR auf localhost:4200
 ```
 
-- [docs/extension-overview.md](docs/extension-overview.md) - Extension Architektur-Überblick
-- [docs/extension-core.md](docs/extension-core.md) - Core Module (Command-System, Settings, Exceptions)
-- [docs/extension-jira.md](docs/extension-jira.md) - Jira Module (Repository, API Client, Commands)
-- [docs/extension-commands.md](docs/extension-commands.md) - Command-System im Detail
-- [docs/webview.md](docs/webview.md) - Webview → Extension Kommunikation
+### Extension Watch-Mode
+
+```bash
+npm run extension:watch
+```
 
 ## Lizenz
 
-MIT - Ralf Hannuschka
+MIT – Ralf Hannuschka

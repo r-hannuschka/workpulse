@@ -1,1 +1,0 @@
-export * from './src/workpulse-webview-module';

@@ -1,9 +1,9 @@
-import type { Command } from "../../command";
-import type { TimeEntry } from "../types/time-entry";
+import type { Command } from "../../core";
 
-export type UpdateEntryPayload = {
+/** Time-Entry bearbeiten – ID + Patch */
+export interface UpdateEntryPayload {
   entryId: string;
-  patch: Pick<TimeEntry, "startAt" | "endAt">;
-};
+  patch: { startAt?: string; endAt?: string };
+}
 
 export type UpdateEntryCommand = Command<"timetracker:update-entry", UpdateEntryPayload>;

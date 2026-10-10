@@ -1,0 +1,1 @@
+export type { ISatelliteController } from './src/satellite.controller';

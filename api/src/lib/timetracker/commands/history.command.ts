@@ -1,4 +1,8 @@
-import type { Command } from "../../command";
+import type { Command } from "../../core";
 
-export type HistoryPayload = { date: string };
+/** History für Datum */
+export interface HistoryPayload {
+  date: string;
+}
+
 export type HistoryCommand = Command<"timetracker:history", HistoryPayload>;

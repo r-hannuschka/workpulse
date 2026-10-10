@@ -1,6 +1,9 @@
-import type { Command } from "../../command";
-import type { TimeEntry } from "../types/time-entry";
+import type { Command } from "../../core";
 
-export type QueryByIssuePayload = { query: string; limit?: number };
+/** Time-Entries nach Issue suchen */
+export interface QueryByIssuePayload {
+  query: string;
+  limit?: number;
+}
+
 export type QueryByIssueCommand = Command<"timetracker:query-by-issue", QueryByIssuePayload>;
-export type QueryByIssueResponse = { results: TimeEntry[] };
